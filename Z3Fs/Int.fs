@@ -2,10 +2,10 @@
 
 open System
 open System.Numerics
-open Microsoft.Z3
-open Microsoft.Z3.FSharp.Bool
 
-module Z3 = Microsoft.Z3.FSharp.Context
+open Microsoft.Z3
+open Microsoft.Z3.FSharp.Common
+open Microsoft.Z3.FSharp.Bool
 
 type IntArith = IntExpr of IntExpr
 with member x.Expr = match x with IntExpr expr -> expr
@@ -13,23 +13,23 @@ with member x.Expr = match x with IntExpr expr -> expr
 
 [<AutoOpen>]
 module internal IntUtils =
-    let inline mkInt (x: bigint) = Z3.getContext().MkInt(string x)
-    let inline add (x: IntExpr) (y: IntExpr) = Z3.getContext().MkAdd(x, y) :?> IntExpr |> IntExpr
-    let inline subtract (x: IntExpr) (y: IntExpr) = Z3.getContext().MkSub(x, y) :?> IntExpr |> IntExpr
-    let inline multiply (x: IntExpr) (y: IntExpr) = Z3.getContext().MkMul(x, y) :?> IntExpr |> IntExpr
+    let inline mkInt (x: bigint) = getContext().MkInt(string x)
+    let inline add (x: IntExpr) (y: IntExpr) = getContext().MkAdd(x, y) :?> IntExpr |> IntExpr
+    let inline subtract (x: IntExpr) (y: IntExpr) = getContext().MkSub(x, y) :?> IntExpr |> IntExpr
+    let inline multiply (x: IntExpr) (y: IntExpr) = getContext().MkMul(x, y) :?> IntExpr |> IntExpr
     let inline exp (x: IntExpr) (y: bigint) =
             let rec loop i acc =
                 if i = 0I then acc
-                else loop (i-1I) (Z3.getContext().MkMul(acc, x))
+                else loop (i-1I) (getContext().MkMul(acc, x))
             if y = 0I then (mkInt 0I) :> IntExpr |> IntExpr
             elif y > 0I then loop (y-1I) x :?> IntExpr |> IntExpr
             else failwith "Coefficient should be a non-negative integer"
-    let inline gt (x: IntExpr) (y: IntExpr) = Z3.getContext().MkGt(x, y) |> BoolExpr
-    let inline eq (x: IntExpr) (y: IntExpr) = Z3.getContext().MkEq(x, y) |> BoolExpr
-    let inline ge (x: IntExpr) (y: IntExpr) = Z3.getContext().MkGe(x, y) |> BoolExpr
-    let inline lt (x: IntExpr) (y: IntExpr) = Z3.getContext().MkLt(x, y) |> BoolExpr
-    let inline ueq (x: IntExpr) (y: IntExpr) = Z3.getContext().MkDistinct(x, y) |> BoolExpr
-    let inline le (x: IntExpr) (y: IntExpr) = Z3.getContext().MkLe(x, y) |> BoolExpr
+    let inline gt (x: IntExpr) (y: IntExpr) = getContext().MkGt(x, y) |> BoolExpr
+    let inline eq (x: IntExpr) (y: IntExpr) = getContext().MkEq(x, y) |> BoolExpr
+    let inline ge (x: IntExpr) (y: IntExpr) = getContext().MkGe(x, y) |> BoolExpr
+    let inline lt (x: IntExpr) (y: IntExpr) = getContext().MkLt(x, y) |> BoolExpr
+    let inline ueq (x: IntExpr) (y: IntExpr) = getContext().MkDistinct(x, y) |> BoolExpr
+    let inline le (x: IntExpr) (y: IntExpr) = getContext().MkLe(x, y) |> BoolExpr
 
 type IntArith with
     static member (+)(IntExpr x, IntExpr y) = add x y
@@ -72,7 +72,7 @@ type IntArith with
     static member (<=.)(x: bigint, y: bigint) = le (mkInt x) (mkInt y)
 
 let internal mkIntVar =
-    let context = Z3.getContext()
+    let context = getContext()
     fun (s: string) -> context.MkIntConst s 
 
 /// Return an int const with supplied name

@@ -2,9 +2,8 @@
 
 open System
 open Microsoft.Z3
+open Microsoft.Z3.FSharp.Common
 open Microsoft.Z3.FSharp.Bool
-
-module Z3 =  Microsoft.Z3.FSharp.Context
 
 type RealArith = RealExpr of RealExpr
 with member x.Expr = match x with RealExpr expr -> expr
@@ -12,23 +11,23 @@ with member x.Expr = match x with RealExpr expr -> expr
 
 [<AutoOpen>]
 module internal RealUtils =
-    let inline mkReal (x: float) = Z3.getContext().MkReal(string x)
-    let inline add (x: RealExpr) (y: RealExpr) = Z3.getContext().MkAdd(x, y) :?> RealExpr |> RealExpr
-    let inline subtract (x: RealExpr) (y: RealExpr) = Z3.getContext().MkSub(x, y) :?> RealExpr |> RealExpr
-    let inline multiply (x: RealExpr) (y: RealExpr) = Z3.getContext().MkMul(x, y) :?> RealExpr |> RealExpr
+    let inline mkReal (x: float) = getContext().MkReal(string x)
+    let inline add (x: RealExpr) (y: RealExpr) = getContext().MkAdd(x, y) :?> RealExpr |> RealExpr
+    let inline subtract (x: RealExpr) (y: RealExpr) = getContext().MkSub(x, y) :?> RealExpr |> RealExpr
+    let inline multiply (x: RealExpr) (y: RealExpr) = getContext().MkMul(x, y) :?> RealExpr |> RealExpr
     let inline exp (x: RealExpr) (y: bigint) =
             let rec loop i acc =
                 if i = 0I then acc
-                else loop (i-1I) (Z3.getContext().MkMul(acc, x))
+                else loop (i-1I) (getContext().MkMul(acc, x))
             if y = 0I then (mkReal 0.) :> RealExpr |> RealExpr
             elif y > 0I then loop (y-1I) x :?> RealExpr |> RealExpr
             else failwith "Coefficient should be a non-negative integer"
-    let inline gt (x: RealExpr) (y: RealExpr) = Z3.getContext().MkGt(x, y) |> BoolExpr
-    let inline eq (x: RealExpr) (y: RealExpr) = Z3.getContext().MkEq(x, y) |> BoolExpr
-    let inline ge (x: RealExpr) (y: RealExpr) = Z3.getContext().MkGe(x, y) |> BoolExpr
-    let inline lt (x: RealExpr) (y: RealExpr) = Z3.getContext().MkLt(x, y) |> BoolExpr
-    let inline ueq (x: RealExpr) (y: RealExpr) = Z3.getContext().MkDistinct(x, y) |> BoolExpr
-    let inline le (x: RealExpr) (y: RealExpr) = Z3.getContext().MkLe(x, y) |> BoolExpr
+    let inline gt (x: RealExpr) (y: RealExpr) = getContext().MkGt(x, y) |> BoolExpr
+    let inline eq (x: RealExpr) (y: RealExpr) = getContext().MkEq(x, y) |> BoolExpr
+    let inline ge (x: RealExpr) (y: RealExpr) = getContext().MkGe(x, y) |> BoolExpr
+    let inline lt (x: RealExpr) (y: RealExpr) = getContext().MkLt(x, y) |> BoolExpr
+    let inline ueq (x: RealExpr) (y: RealExpr) = getContext().MkDistinct(x, y) |> BoolExpr
+    let inline le (x: RealExpr) (y: RealExpr) = getContext().MkLe(x, y) |> BoolExpr
 
 type RealArith with
     static member (+)(RealExpr x, RealExpr y) = add x y
@@ -71,7 +70,7 @@ type RealArith with
     static member (<=.)(x: float, y: float) = le (mkReal x) (mkReal y)
 
 let internal mkRealVar =
-    let context = Z3.getContext()
+    let context = getContext()
     fun (s: string) -> context.MkRealConst s 
 
 /// Return an int const with supplied name

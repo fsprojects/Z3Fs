@@ -11,3 +11,4 @@ Details will be added later.
 - Check correctness of examples carefully.
 - Examine difficult modules including uninterpreted functions and bit-vectors.
 - Rearrange modules; many functions are in wrong places.
+- Rewrite ToString() for pretty-printing.

@@ -2,9 +2,9 @@
 
 open System
 open System.Numerics
-open Microsoft.Z3
 
-module Z3 = Microsoft.Z3.FSharp.Context
+open Microsoft.Z3
+open Microsoft.Z3.FSharp.Common
 
 type BoolArith = BoolExpr of BoolExpr
 with member x.Expr = match x with BoolExpr expr -> expr
@@ -12,12 +12,12 @@ with member x.Expr = match x with BoolExpr expr -> expr
 
 [<AutoOpen>]
 module internal BoolUtils =
-    let inline mkBool b = Z3.getContext().MkBool(b)
-    let inline mkAnd (x: BoolExpr) (y: BoolExpr) = Z3.getContext().MkAnd(x, y) |> BoolExpr
-    let inline mkOr (x: BoolExpr) (y: BoolExpr) = Z3.getContext().MkOr(x, y) |> BoolExpr
-    let inline mkNot (x: BoolExpr) = Z3.getContext().MkNot(x) |> BoolExpr
-    let inline mkImplies (x: BoolExpr) (y: BoolExpr) = Z3.getContext().MkImplies(x, y) |> BoolExpr
-    let inline mkEquiv (x: BoolExpr) (y: BoolExpr) = Z3.getContext().MkEq(x, y) |> BoolExpr
+    let inline mkBool b = getContext().MkBool(b)
+    let inline mkAnd (x: BoolExpr) (y: BoolExpr) = getContext().MkAnd(x, y) |> BoolExpr
+    let inline mkOr (x: BoolExpr) (y: BoolExpr) = getContext().MkOr(x, y) |> BoolExpr
+    let inline mkNot (x: BoolExpr) = getContext().MkNot(x) |> BoolExpr
+    let inline mkImplies (x: BoolExpr) (y: BoolExpr) = getContext().MkImplies(x, y) |> BoolExpr
+    let inline mkEquiv (x: BoolExpr) (y: BoolExpr) = getContext().MkEq(x, y) |> BoolExpr
 
 type BoolArith with    
     static member (&&.)(BoolExpr p, BoolExpr q) = mkAnd p q    
@@ -40,14 +40,14 @@ type BoolArith with
     static member (<=>.)(p: bool, q: bool) = mkEquiv (mkBool p) (mkBool q)
 
 let internal mkBoolVar =
-    let context = Z3.getContext()
+    let context = getContext()
     fun (s: string) -> context.MkBoolConst s 
 
 /// Return an int const with supplied name
 let Bool = mkBoolVar >> BoolExpr
 
-let True = Z3.getContext().MkTrue() |> BoolExpr
-let False = Z3.getContext().MkFalse() |> BoolExpr
+let True = getContext().MkTrue() |> BoolExpr
+let False = getContext().MkFalse() |> BoolExpr
 
 let And (args: BoolArith []) = Array.reduce (&&.) args
 let Or (args: BoolArith []) = Array.reduce (||.) args
@@ -67,7 +67,7 @@ type Overloads = Overloads with
 let inline (=>) k v = (Overloads $ v) k
 
 let inline simplify (f: #Expr, options: (string * _) []) =
-    let p = Z3.getContext().MkParams()
+    let p = getContext().MkParams()
     for (k, v) in options do
         match v with
         | Bool b -> p.Add(k, b)
@@ -77,7 +77,7 @@ let inline simplify (f: #Expr, options: (string * _) []) =
 
 type Z3 =
     static member Solve ([<ParamArray>] xs: _ []) =
-        let solver = Z3.getContext().MkSolver()
+        let solver = getContext().MkSolver()
         for (BoolExpr expr) in xs do
             solver.Assert expr
         solver.Check()
