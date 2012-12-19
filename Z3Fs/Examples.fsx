@@ -74,6 +74,22 @@ let solverExample1() =
     printfn "%O" s
     printfn "Solving restored set of constraints..."
     printfn "%O" <| s.Check()
+
+let solverExample2() =
+    let x = Real("x")
+    let y = Real("y")
+    let s = Solver()
+    s.Add(x >. 1.0, y >. 1.0, Or [| x + y >. 3.0; x - y <. 2.0|])
+    printfn "asserted constraints..."
+    for c in s.Assertions do
+        printf "%O" c
+
+    printfn "%O" <| s.Check()
+    printfn "statistics for the last check method..."
+    printfn "%O" s.Statistics
+    // Traversing statistics
+    for k, v in s.Statistics do
+        printfn "%s : %O" k v
     
 #time "on";;
 
@@ -85,3 +101,4 @@ let res04 = mixedArithExample1();;
 let res05 = mixedArithExample2();;
 let res06 = simplifyExample1();;
 let res07 = solverExample1();;
+let res08 = solverExample1();;

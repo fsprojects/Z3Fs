@@ -86,3 +86,8 @@ type Microsoft.Z3.Solver with
     member x.Add([<ParamArray>] xs: _ []) =
         for (BoolExpr expr) in xs do 
           x.Assert expr
+
+/// Implement IEnumerable interface to support for..in..do construct 
+type Microsoft.Z3.Statistics with
+    member x.GetEnumerator() =
+        (Seq.map (fun k -> k, x.[k]) x.Keys).GetEnumerator()
