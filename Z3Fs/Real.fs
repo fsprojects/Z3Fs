@@ -1,5 +1,6 @@
 ﻿module Microsoft.Z3.FSharp.Real
 
+open System
 open Microsoft.Z3
 open Microsoft.Z3.FSharp.Bool
 
@@ -73,3 +74,6 @@ let internal mkRealVar =
 
 /// Return an int const with supplied name
 let Real = mkRealVar >> RealExpr
+
+type Microsoft.Z3.FSharp.Bool.Z3 with
+    static member Simplify(RealExpr f, [<ParamArray>] options: (string * _) []) = simplify(f, options)

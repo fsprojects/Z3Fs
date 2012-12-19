@@ -52,9 +52,32 @@ let Or (args: BoolArith []) = Array.reduce (||.) args
 let Implies (arg1: BoolArith, arg2: BoolArith) = arg1 =>. arg2
 let Not (arg: BoolArith) = !. arg
 
+type Val =
+    | Bool of bool
+    | UInt of uint32
+    | Double of float
+
+type Overloads = Overloads with
+    static member ($)(Overloads, b: bool) = fun (s: string) -> s, Bool b
+    static member ($)(Overloads, i: uint32) = fun (s: string) -> s, UInt i
+    static member ($)(Overloads, f: float) = fun (s: string) -> s, Double f
+
+let inline (=>) k v = (Overloads $ v) k
+
+let inline simplify (f: #Expr, options: (string * _) []) =
+    let p = Z3.getContext().MkParams()
+    for (k, v) in options do
+        match v with
+        | Bool b -> p.Add(k, b)
+        | UInt i -> p.Add(k, i)
+        | Double f -> p.Add(k, f)
+    f.Simplify(p)
+
 type Z3 =
     static member Solve ([<ParamArray>] xs: _ []) =
         let solver = Z3.getContext().MkSolver()
         for (BoolExpr expr) in xs do
             solver.Assert expr
         solver.Check()
+
+    static member Simplify(BoolExpr f, [<ParamArray>] options: (string * _) []) = simplify(f, options)

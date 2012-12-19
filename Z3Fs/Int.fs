@@ -1,5 +1,6 @@
 ﻿module Microsoft.Z3.FSharp.Int
 
+open System
 open System.Numerics
 open Microsoft.Z3
 open Microsoft.Z3.FSharp.Bool
@@ -75,3 +76,5 @@ let internal mkIntVar =
 /// Return an int const with supplied name
 let Int = mkIntVar >> IntExpr
 
+type Microsoft.Z3.FSharp.Bool.Z3 with
+    static member Simplify(IntExpr f, [<ParamArray>] options: (string * _) []) = simplify(f, options)
