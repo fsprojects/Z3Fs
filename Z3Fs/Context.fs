@@ -8,5 +8,3 @@ module Context =
     let mutable internal context = new Context(Dictionary())
     let getContext() = context
     let setContext c = context <- c
-    
-

@@ -1,4 +1,4 @@
-﻿#r "Microsoft.Z3.dll"
+﻿#r "../Microsoft.Z3.dll"
 #load "Context.fs"
 #load "Bool.fs"
 #load "Int.fs"
@@ -40,6 +40,7 @@ let mixedArithExample1() =
     Z3.Solve(a >. b + 2I, a =. 2I*c + 10I, c + b <=. 1000I, d >=. e)
     
 #time "on";;
+
 let res00 = boolArithExample1();;
 let res01 = boolArithExample2();;
 let res02 = intArithExample1();;
