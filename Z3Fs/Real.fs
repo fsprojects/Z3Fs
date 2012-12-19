@@ -78,4 +78,5 @@ let internal mkRealVar =
 let Real = mkRealVar >> RealExpr
 
 type Microsoft.Z3.FSharp.Bool.Z3 with
-    static member Simplify(RealExpr f, [<ParamArray>] options: (string * _) []) = simplify(f, options) :?> RealExpr |> RealExpr
+    static member Simplify(RealExpr f, [<ParamArray>] options: (string * _) []) = 
+        simplify(f, options) :?> RealExpr |> RealExpr

@@ -82,7 +82,8 @@ type Z3 =
             solver.Assert expr
         solver.Check()
 
-    static member Simplify(BoolExpr f, [<ParamArray>] options: (string * _) []) = simplify(f, options) :?> BoolExpr |> BoolExpr
+    static member Simplify(BoolExpr f, [<ParamArray>] options: (string * _) []) = 
+        simplify(f, options) :?> BoolExpr |> BoolExpr
 
 type Microsoft.Z3.Solver with
     member x.Add([<ParamArray>] xs: _ []) =
@@ -94,6 +95,7 @@ type Microsoft.Z3.Statistics with
     member x.GetEnumerator() =
         (Seq.map (fun k -> k, x.[k]) x.Keys).GetEnumerator()
 
+/// Multiple indexers for evaluating formulas
 type Microsoft.Z3.Model with
     member x.Item 
         with get (index: Expr) = x.Eval(index, true)    

@@ -79,4 +79,5 @@ let internal mkIntVar =
 let Int = mkIntVar >> IntExpr
 
 type Microsoft.Z3.FSharp.Bool.Z3 with
-    static member Simplify(IntExpr f, [<ParamArray>] options: (string * _) []) = simplify(f, options) :?> IntExpr |> IntExpr
+    static member Simplify(IntExpr f, [<ParamArray>] options: (string * _) []) = 
+        simplify(f, options) :?> IntExpr |> IntExpr
