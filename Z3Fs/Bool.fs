@@ -85,16 +85,6 @@ let inline simplify (f: #Expr, options: (string * _) []) =
         | Double f -> p.Add(k, f)
     f.Simplify(p)
 
-type Z3 =
-    static member Solve ([<ParamArray>] xs: _ []) =
-        let solver = getContext().MkSolver()
-        for (BoolExpr expr) in xs do
-            solver.Assert expr
-        solver.Check()
-
-    static member Simplify(BoolExpr f, [<ParamArray>] options: (string * _) []) = 
-        simplify(f, options) :?> BoolExpr |> BoolExpr
-
 type Microsoft.Z3.Solver with
     member x.Add([<ParamArray>] xs: _ []) =
         for (BoolExpr expr) in xs do 
@@ -111,4 +101,21 @@ type Microsoft.Z3.Model with
         with get (index: Expr) = x.Eval(index, true)    
     member x.Item 
         with get (index: FuncDecl) = x.ConstInterp(index)   
+
+type Z3 =
+    static member Solve ([<ParamArray>] xs: _ []) =
+        let solver = getContext().MkSolver()
+        for (BoolExpr expr) in xs do
+            solver.Assert expr
+        let result = solver.Check()
+        let m = solver.Model
+        printf "[ "
+        for d in m.Decls do
+            printf "%O = %O, " d.Name m.[d]
+        printfn "]"
+        result
+
+    static member Simplify(BoolExpr f, [<ParamArray>] options: (string * _) []) = 
+        simplify(f, options) :?> BoolExpr |> BoolExpr
+
         

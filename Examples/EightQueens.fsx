@@ -25,6 +25,6 @@ let diags = [| for i in 0..7 do
                  for j in 0..i do
                     if i <> j then 
                        yield And [| queens.[i] - queens.[j] <>. bigint (i - j);
-                                    queens.[i] - queens.[j] <>. bigint (j - i) |] |]
+                                    queens.[i] - queens.[j] <>. bigint (j - i) |] |];;
 
 Z3.Solve(rows ++ cols ++ diags)
