@@ -18,7 +18,10 @@ module internal BoolUtils =
     let inline mkNot (x: BoolExpr) = getContext().MkNot(x) |> BoolExpr
     let inline mkImplies (x: BoolExpr) (y: BoolExpr) = getContext().MkImplies(x, y) |> BoolExpr
     let inline mkEquiv (x: BoolExpr) (y: BoolExpr) = getContext().MkEq(x, y) |> BoolExpr
-
+    let inline mkTrue() = getContext().MkTrue() |> BoolExpr
+    let inline mkFalse() = getContext().MkFalse() |> BoolExpr
+    let inline mkDistinct (xs: Expr []) = getContext().MkDistinct xs |> BoolExpr
+    
 type BoolArith with    
     static member (&&.)(BoolExpr p, BoolExpr q) = mkAnd p q    
     static member (&&.)(BoolExpr p, q: bool) = mkAnd p (mkBool q)
@@ -38,6 +41,11 @@ type BoolArith with
     static member (<=>.)(BoolExpr p, q: bool) = mkEquiv p (mkBool q)
     static member (<=>.)(p: bool, BoolExpr q) = mkEquiv (mkBool p) q
     static member (<=>.)(p: bool, q: bool) = mkEquiv (mkBool p) (mkBool q)
+    static member (=.)(BoolExpr p, BoolExpr q) = mkEquiv p q
+    static member (=.)(BoolExpr p, q: bool) = mkEquiv p (mkBool q)
+    static member (=.)(p: bool, BoolExpr q) = mkEquiv (mkBool p) q
+    static member (=.)(p: bool, q: bool) = mkEquiv (mkBool p) (mkBool q)
+    static member Distinct xs = Array.map (fun (BoolExpr expr) -> expr :> Expr) xs |> mkDistinct
 
 let internal mkBoolVar =
     let context = getContext()
@@ -46,13 +54,15 @@ let internal mkBoolVar =
 /// Return an int const with supplied name
 let Bool = mkBoolVar >> BoolExpr
 
-let True = getContext().MkTrue() |> BoolExpr
-let False = getContext().MkFalse() |> BoolExpr
+let True = mkTrue()
+let False = mkFalse()
 
 let And (args: BoolArith []) = Array.reduce (&&.) args
 let Or (args: BoolArith []) = Array.reduce (||.) args
 let Implies (arg1: BoolArith, arg2: BoolArith) = arg1 =>. arg2
 let Not (arg: BoolArith) = !. arg
+
+let inline Distinct (xs: ^T []) = (^T : (static member Distinct : ^T [] -> BoolArith) (xs)) 
 
 type Val =
     | Bool of bool

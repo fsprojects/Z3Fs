@@ -8,3 +8,5 @@ let getContext() = context
 let setContext c = context <- c
     
 let Solver() = getContext().MkSolver()
+
+let inline (++) xs ys = Array.append xs ys

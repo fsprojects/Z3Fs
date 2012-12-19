@@ -6,6 +6,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{185EE158-80EF-4359-89D7-833DAB6E9208}"
 	ProjectSection(SolutionItems) = preProject
 		Examples\DogCatMouse.fsx = Examples\DogCatMouse.fsx
+		Examples\EightQueens.fsx = Examples\EightQueens.fsx
 		Examples\Examples.fsx = Examples\Examples.fsx
 	EndProjectSection
 EndProject
