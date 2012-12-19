@@ -81,3 +81,8 @@ type Z3 =
         solver.Check()
 
     static member Simplify(BoolExpr f, [<ParamArray>] options: (string * _) []) = simplify(f, options)
+
+type Microsoft.Z3.Solver with
+    member x.Add([<ParamArray>] xs: _ []) =
+        for (BoolExpr expr) in xs do 
+          x.Assert expr

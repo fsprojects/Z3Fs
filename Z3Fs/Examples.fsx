@@ -24,7 +24,7 @@ let boolArithExample2() =
 let intArithExample1() =
     let x = Int "x"
     let y = Int "y"
-    Z3.Solve(x >. 2I, y <. 10I, x + 2I*y =. 7I)
+    Z3.Solve(x >. 2I, y <. 10I, x + 2I * y =. 7I)
 
 let realArithExample1() =
     let x = Real "x"
@@ -42,13 +42,38 @@ let mixedArithExample2() =
     let c = Int "c"
     let d = Real "d"
     let e = Real "e"
-    Z3.Solve(a >. b + 2I, a =. 2I*c + 10I, c + b <=. 1000I, d >=. e)
+    Z3.Solve(a >. b + 2I, a =. 2I * c + 10I, c + b <=. 1000I, d >=. e)
 
 let simplifyExample1() =
     let x = Real("x")
     let y = Real("y")
     // Using Z3 native option names
     printfn "%A" <| Z3.Simplify(x =. y + 2.0, ":arith-lhs" => true)
+
+let solverExample1() =
+    let x = Int("x")
+    let y = Int("y")
+
+    let s = Solver()
+    printfn "%O" s
+
+    s.Add(x >. 10I, y =. x + 2I)
+    printfn "%O" s
+    printfn "Solving constraints in the solver s ..."
+    printfn "%O" <| s.Check()
+
+    printfn "Create a new scope..."
+    s.Push()
+    s.Add(y <. 11I)
+    printfn "%O" s
+    printfn "Solving updated set of constraints..."
+    printfn "%O" <| s.Check()
+
+    printfn "Restoring state..."
+    s.Pop()
+    printfn "%O" s
+    printfn "Solving restored set of constraints..."
+    printfn "%O" <| s.Check()
     
 #time "on";;
 
@@ -59,3 +84,4 @@ let res03 = realArithExample1();;
 let res04 = mixedArithExample1();;
 let res05 = mixedArithExample2();;
 let res06 = simplifyExample1();;
+let res07 = solverExample1();;
