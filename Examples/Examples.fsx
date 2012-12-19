@@ -1,6 +1,7 @@
 ﻿#r "../Microsoft.Z3.dll"
 #r "../Z3Fs/bin/Debug/Z3Fs.dll"
 
+open Microsoft.Z3
 open Microsoft.Z3.FSharp
 open Common
 open Bool
@@ -112,7 +113,24 @@ let solverExample3() =
 
     printfn "traversing model..."
     for d in m.Decls do
-        printfn "%O = %O" <|| (d.Name, m.[d])
+        printfn "%O = %O" d.Name m.[d]
+
+let demorgan p q = And [|p; q|] <=>. Not(Or [|Not(p); Not(q)|])
+
+let prove f =
+    let s = Solver()
+    s.Add(Not(f))
+    if s.Check() = Status.UNSATISFIABLE then
+       printfn "proved"
+    else
+        printfn "failed to prove"
+
+let satValidExample1() =
+    let p = Bool "p"
+    let q = Bool "q"
+    printfn "%O" <| demorgan p q
+    printfn "Proving demorgan..."
+    prove(demorgan p q)
     
 #time "on";;
 
@@ -132,3 +150,5 @@ let res07 = simplifyExample2();;
 let res08 = solverExample1();;
 let res09 = solverExample2();;
 let res10 = solverExample3();;
+
+let res11 = satValidExample1();;
