@@ -8,6 +8,7 @@ open Microsoft.Z3.FSharp.Bool
 module Z3 = Microsoft.Z3.FSharp.Context
 
 type IntArith = IntExpr of IntExpr
+with member x.Expr = match x with IntExpr expr -> expr
 
 [<AutoOpen>]
 module internal IntUtils =

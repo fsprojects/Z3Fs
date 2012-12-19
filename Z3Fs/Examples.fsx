@@ -90,6 +90,21 @@ let solverExample2() =
     // Traversing statistics
     for k, v in s.Statistics do
         printfn "%s : %O" k v
+
+let solverExample3() =
+    let x = Real("x")
+    let y = Real("y")
+    let z = Real("z")
+    let s = Solver()
+    s.Add(x >. 1.0, y >. 1.0, x + y >. 3.0, z - x <. 10.0)
+    printfn "%O" <| s.Check()
+
+    let m = s.Model
+    printfn "x = %O" m.[x.Expr]
+
+    printfn "traversing model..."
+    for d in m.Decls do
+        printfn "%O = %O" <|| (d.Name, m.[d])
     
 #time "on";;
 
@@ -101,4 +116,5 @@ let res04 = mixedArithExample1();;
 let res05 = mixedArithExample2();;
 let res06 = simplifyExample1();;
 let res07 = solverExample1();;
-let res08 = solverExample1();;
+let res08 = solverExample2();;
+let res09 = solverExample3();;

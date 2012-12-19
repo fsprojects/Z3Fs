@@ -7,6 +7,7 @@ open Microsoft.Z3.FSharp.Bool
 module Z3 =  Microsoft.Z3.FSharp.Context
 
 type RealArith = RealExpr of RealExpr
+with member x.Expr = match x with RealExpr expr -> expr
 
 [<AutoOpen>]
 module internal RealUtils =

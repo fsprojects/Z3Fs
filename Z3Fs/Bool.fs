@@ -7,6 +7,7 @@ open Microsoft.Z3
 module Z3 = Microsoft.Z3.FSharp.Context
 
 type BoolArith = BoolExpr of BoolExpr
+with member x.Expr = match x with BoolExpr expr -> expr
 
 [<AutoOpen>]
 module internal BoolUtils =
@@ -91,3 +92,10 @@ type Microsoft.Z3.Solver with
 type Microsoft.Z3.Statistics with
     member x.GetEnumerator() =
         (Seq.map (fun k -> k, x.[k]) x.Keys).GetEnumerator()
+
+type Microsoft.Z3.Model with
+    member x.Item 
+        with get (index: Expr) = x.Eval(index, true)    
+    member x.Item 
+        with get (index: FuncDecl) = x.ConstInterp(index)   
+        
