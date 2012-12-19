@@ -9,8 +9,10 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Z3Fs</RootNamespace>
     <AssemblyName>Z3Fs</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <Name>Z3Fs</Name>
+    <TargetFrameworkProfile />
+    <ReferencePath>..</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Z3">
-      <HintPath>C:\Users\s094745\Documents\Visual Studio 2012\Z3FS\Z3FS\Microsoft.Z3.dll</HintPath>
+      <HintPath>..\Microsoft.Z3.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
