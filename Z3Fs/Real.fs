@@ -8,6 +8,7 @@ module Z3 =  Microsoft.Z3.FSharp.Context
 
 type RealArith = RealExpr of RealExpr
 with member x.Expr = match x with RealExpr expr -> expr
+     override x.ToString() = match x with RealExpr expr -> sprintf "%O" expr
 
 [<AutoOpen>]
 module internal RealUtils =
@@ -77,4 +78,4 @@ let internal mkRealVar =
 let Real = mkRealVar >> RealExpr
 
 type Microsoft.Z3.FSharp.Bool.Z3 with
-    static member Simplify(RealExpr f, [<ParamArray>] options: (string * _) []) = simplify(f, options)
+    static member Simplify(RealExpr f, [<ParamArray>] options: (string * _) []) = simplify(f, options) :?> RealExpr |> RealExpr

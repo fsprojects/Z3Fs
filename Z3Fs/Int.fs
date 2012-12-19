@@ -9,6 +9,7 @@ module Z3 = Microsoft.Z3.FSharp.Context
 
 type IntArith = IntExpr of IntExpr
 with member x.Expr = match x with IntExpr expr -> expr
+     override x.ToString() = match x with IntExpr expr -> sprintf "%O" expr
 
 [<AutoOpen>]
 module internal IntUtils =
@@ -78,4 +79,4 @@ let internal mkIntVar =
 let Int = mkIntVar >> IntExpr
 
 type Microsoft.Z3.FSharp.Bool.Z3 with
-    static member Simplify(IntExpr f, [<ParamArray>] options: (string * _) []) = simplify(f, options)
+    static member Simplify(IntExpr f, [<ParamArray>] options: (string * _) []) = simplify(f, options) :?> IntExpr |> IntExpr

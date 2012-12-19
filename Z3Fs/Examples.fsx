@@ -48,7 +48,17 @@ let simplifyExample1() =
     let x = Real("x")
     let y = Real("y")
     // Using Z3 native option names
-    printfn "%A" <| Z3.Simplify(x =. y + 2.0, ":arith-lhs" => true)
+    printfn "%O" <| Z3.Simplify(x =. y + 2.0, ":arith-lhs" => true)
+
+let simplifyExample2() =
+    let x = Real("x")
+    let y = Real("y")
+    // Put expression in sum-of-monomials form
+    let t = Z3.Simplify((x + y) ** 3I, ":som" => true)
+    printfn "%O" t
+    // Use power operator
+    let t = Z3.Simplify(t, ":mul-to-power" => true)
+    printfn "%O" t
 
 let solverExample1() =
     let x = Int("x")
@@ -110,11 +120,17 @@ let solverExample3() =
 
 let res00 = boolArithExample1();;
 let res01 = boolArithExample2();;
+
 let res02 = intArithExample1();;
+
 let res03 = realArithExample1();;
+
 let res04 = mixedArithExample1();;
 let res05 = mixedArithExample2();;
+
 let res06 = simplifyExample1();;
-let res07 = solverExample1();;
-let res08 = solverExample2();;
-let res09 = solverExample3();;
+let res07 = simplifyExample2();;
+
+let res08 = solverExample1();;
+let res09 = solverExample2();;
+let res10 = solverExample3();;

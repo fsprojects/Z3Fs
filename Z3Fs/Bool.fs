@@ -8,6 +8,7 @@ module Z3 = Microsoft.Z3.FSharp.Context
 
 type BoolArith = BoolExpr of BoolExpr
 with member x.Expr = match x with BoolExpr expr -> expr
+     override x.ToString() = match x with BoolExpr expr -> sprintf "%O" expr
 
 [<AutoOpen>]
 module internal BoolUtils =
@@ -81,7 +82,7 @@ type Z3 =
             solver.Assert expr
         solver.Check()
 
-    static member Simplify(BoolExpr f, [<ParamArray>] options: (string * _) []) = simplify(f, options)
+    static member Simplify(BoolExpr f, [<ParamArray>] options: (string * _) []) = simplify(f, options) :?> BoolExpr |> BoolExpr
 
 type Microsoft.Z3.Solver with
     member x.Add([<ParamArray>] xs: _ []) =
