@@ -6,20 +6,26 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{185EE158-80EF-4359-89D7-833DAB6E9208}"
 	ProjectSection(SolutionItems) = preProject
 		Examples\DogCatMouse.fsx = Examples\DogCatMouse.fsx
-		Examples\Simple.fsx = Examples\Simple.fsx
 		Examples\Examples.fsx = Examples\Examples.fsx
+		Examples\KinematicEquations.fsx = Examples\KinematicEquations.fsx
 	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F21BFF7B-A345-45A1-99F6-DF78883877BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F21BFF7B-A345-45A1-99F6-DF78883877BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F21BFF7B-A345-45A1-99F6-DF78883877BD}.Debug|x64.ActiveCfg = Debug|x64
+		{F21BFF7B-A345-45A1-99F6-DF78883877BD}.Debug|x64.Build.0 = Debug|x64
 		{F21BFF7B-A345-45A1-99F6-DF78883877BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F21BFF7B-A345-45A1-99F6-DF78883877BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F21BFF7B-A345-45A1-99F6-DF78883877BD}.Release|x64.ActiveCfg = Release|x64
+		{F21BFF7B-A345-45A1-99F6-DF78883877BD}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
