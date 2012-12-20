@@ -1,7 +1,6 @@
 ﻿#r "../Microsoft.Z3.dll"
 #r "../Z3Fs/bin/Debug/Z3Fs.dll"
 
-open Microsoft.FSharp.Data.UnitSystems.SI.UnitSymbols
 open Microsoft.Z3
 open Microsoft.Z3.FSharp
 open Common
@@ -64,7 +63,6 @@ let problem2() =
     printfn "Problem: %A" problem 
 
     printfn "Solution: %A" <| Z3.Solve(equations ++ problem)
-
 
 #time "on";;
 problem1();;

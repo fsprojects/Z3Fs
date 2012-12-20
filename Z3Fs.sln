@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{18
 		Examples\DogCatMouse.fsx = Examples\DogCatMouse.fsx
 		Examples\Examples.fsx = Examples\Examples.fsx
 		Examples\KinematicEquations.fsx = Examples\KinematicEquations.fsx
+		Examples\Simple.fsx = Examples\Simple.fsx
 	EndProjectSection
 EndProject
 Global
