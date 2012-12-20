@@ -6,6 +6,7 @@
 ### Purpose ###
 `Z3Fs` aims at providing a simple API to express and solve SMT problems in F#.
 Z3 has an official .NET API written in C# at [Codeplex](http://z3.codeplex.com/SourceControl/changeset/view/89c1785b7322#src/api/dotnet/Context.cs), but it is too verbose and not F#-friendly.
+`Z3Fs` is inspired by [Z3Py](http://rise4fun.com/Z3Py) and along the same line of [Scala^Z3](https://github.com/psuter/ScalaZ3) and [SBV](https://github.com/LeventErkok/sbv).
 Hopefully, `Z3Fs` could give a look of a small EDSL for SMT solving in F#.
 
 ---
