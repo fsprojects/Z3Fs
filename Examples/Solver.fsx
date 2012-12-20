@@ -8,6 +8,8 @@ open Bool
 open Int
 open Real
 
+// Reference at http://rise4fun.com/Z3Py/tutorialcontent/guide#h22
+
 let solverExample1() =
     let x = Int("x")
     let y = Int("y")

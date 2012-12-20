@@ -8,6 +8,8 @@ open Bool
 open Int
 open Real
 
+// Reference at http://rise4fun.com/Z3Py/tutorialcontent/guide#h21
+
 let booleanExample1() =
     let p = Bool "p"
     let q = Bool "q"

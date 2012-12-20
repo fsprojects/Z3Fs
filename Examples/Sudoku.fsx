@@ -8,6 +8,8 @@ open Bool
 open Int
 open Real
 
+// Reference at http://rise4fun.com/Z3Py/tutorialcontent/guide#h210
+
 // 9x9 matrix of integer variables
 let X = [| for i in 0..8 ->
              [| for j in 0..8 do 
