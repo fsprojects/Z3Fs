@@ -10,6 +10,11 @@ type BoolArith = BoolExpr of BoolExpr
 with member x.Expr = match x with BoolExpr expr -> expr
      override x.ToString() = match x with BoolExpr expr -> sprintf "%O" expr
 
+type Microsoft.Z3.Solver with
+    member x.Add([<ParamArray>] xs: _ []) =
+        for (BoolExpr expr) in xs do 
+          x.Assert expr
+
 [<AutoOpen>]
 module internal BoolUtils =
     let inline mkBool b = getContext().MkBool(b)
@@ -76,7 +81,7 @@ type Overloads = Overloads with
 
 let inline (=>) k v = (Overloads $ v) k
 
-let inline simplify (f: #Expr, options: (string * _) []) =
+let internal simplify (f: Expr, options: (string * _) []) =
     let p = getContext().MkParams()
     for (k, v) in options do
         match v with
@@ -85,22 +90,14 @@ let inline simplify (f: #Expr, options: (string * _) []) =
         | Double f -> p.Add(k, f)
     f.Simplify(p)
 
-type Microsoft.Z3.Solver with
-    member x.Add([<ParamArray>] xs: _ []) =
-        for (BoolExpr expr) in xs do 
-          x.Assert expr
-
-/// Implement IEnumerable interface to support for..in..do construct 
-type Microsoft.Z3.Statistics with
-    member x.GetEnumerator() =
-        (Seq.map (fun k -> k, x.[k]) x.Keys).GetEnumerator()
-
-/// Multiple indexers for evaluating formulas
-type Microsoft.Z3.Model with
-    member x.Item 
-        with get (index: Expr) = x.Eval(index, true)    
-    member x.Item 
-        with get (index: FuncDecl) = x.ConstInterp(index)   
+let internal setOption (options: (string * _) []) =
+    let c = getContext()
+    let p = c.MkParams()
+    for (k, v) in options do
+        match v with
+        | Bool b -> c.UpdateParamValue(k, sprintf "%O" b)
+        | UInt i -> c.UpdateParamValue(k, sprintf "%O" i)
+        | Double f -> c.UpdateParamValue(k, sprintf "%O" f)
 
 type Z3 =
     static member Solve ([<ParamArray>] xs: _ []) =
@@ -117,5 +114,8 @@ type Z3 =
 
     static member Simplify(BoolExpr f, [<ParamArray>] options: (string * _) []) = 
         simplify(f, options) :?> BoolExpr |> BoolExpr
+
+    static member SetOption([<ParamArray>] options: (string * _) []) = 
+        setOption(options)
 
         
