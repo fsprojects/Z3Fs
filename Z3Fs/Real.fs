@@ -30,6 +30,7 @@ module internal RealUtils =
     let inline ueq (x: RealExpr) (y: RealExpr) = getContext().MkDistinct(x, y) |> BoolExpr
     let inline le (x: RealExpr) (y: RealExpr) = getContext().MkLe(x, y) |> BoolExpr
     let inline distinct (xs: Expr []) = getContext().MkDistinct xs |> BoolExpr
+    let inline mkITE b expr1 expr2 = getContext().MkITE(b, expr1, expr2) :?> RealExpr |> RealExpr
 
 type RealArith with
     static member (+)(RealExpr x, RealExpr y) = add x y
@@ -75,6 +76,7 @@ type RealArith with
     static member (<=.)(x: float, RealExpr y) = le (mkReal x) y
     static member (<=.)(x: float, y: float) = le (mkReal x) (mkReal y)
     static member Distinct xs = Array.map (fun (RealExpr expr) -> expr :> Expr) xs |> distinct
+    static member If(BoolExpr b, RealExpr expr1, RealExpr expr2) = mkITE b expr1 expr2
 
 let internal mkRealVar =
     let context = getContext()

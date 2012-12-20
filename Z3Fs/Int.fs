@@ -32,6 +32,7 @@ module internal IntUtils =
     let inline ueq (x: IntExpr) (y: IntExpr) = getContext().MkDistinct(x, y) |> BoolExpr
     let inline le (x: IntExpr) (y: IntExpr) = getContext().MkLe(x, y) |> BoolExpr
     let inline distinct (xs: Expr []) = getContext().MkDistinct xs |> BoolExpr
+    let inline mkITE b expr1 expr2 = getContext().MkITE(b, expr1, expr2) :?> IntExpr |> IntExpr
 
 type IntArith with
     static member (+)(IntExpr x, IntExpr y) = add x y
@@ -77,6 +78,7 @@ type IntArith with
     static member (<=.)(x: bigint, IntExpr y) = le (mkInt x) y
     static member (<=.)(x: bigint, y: bigint) = le (mkInt x) (mkInt y)
     static member Distinct xs = Array.map (fun (IntExpr expr) -> expr :> Expr) xs |> mkDistinct
+    static member If(BoolExpr b, IntExpr expr1, IntExpr expr2) = mkITE b expr1 expr2
 
 let internal mkIntVar =
     let context = getContext()

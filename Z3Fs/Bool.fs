@@ -26,6 +26,7 @@ module internal BoolUtils =
     let inline mkTrue() = getContext().MkTrue() |> BoolExpr
     let inline mkFalse() = getContext().MkFalse() |> BoolExpr
     let inline mkDistinct (xs: Expr []) = getContext().MkDistinct xs |> BoolExpr
+    let inline mkITE b expr1 expr2 = getContext().MkITE(b, expr1, expr2) :?> BoolExpr |> BoolExpr
     
 type BoolArith with    
     static member (&&.)(BoolExpr p, BoolExpr q) = mkAnd p q    
@@ -47,6 +48,7 @@ type BoolArith with
     static member (=.)(p: bool, BoolExpr q) = mkEquiv (mkBool p) q
     static member (=.)(p: bool, q: bool) = mkEquiv (mkBool p) (mkBool q)
     static member Distinct xs = Array.map (fun (BoolExpr expr) -> expr :> Expr) xs |> mkDistinct
+    static member If(BoolExpr b, BoolExpr expr1, BoolExpr expr2) = mkITE b expr1 expr2
 
 let internal mkBoolVar =
     let context = getContext()
@@ -64,6 +66,7 @@ let Implies (arg1: BoolArith, arg2: BoolArith) = arg1 =>. arg2
 let Not (arg: BoolArith) = !. arg
 
 let inline Distinct (xs: ^T []) = (^T : (static member Distinct : ^T [] -> BoolArith) (xs)) 
+let inline If (b: BoolArith, expr1: ^T, expr2: ^T) = (^T : (static member If : BoolArith * ^T * ^T -> BoolArith) (b, expr1, expr2))
 
 type Val =
     | Bool of bool
