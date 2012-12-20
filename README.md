@@ -1,6 +1,6 @@
 ﻿Z3Fs
 ===
-### A simple DSL to prototype SMT problems using Z3 API in F# ###
+### A simple DSL to solve SMT problems using Z3 API in F# ###
 
 ---
 Details will be added later.
@@ -12,3 +12,4 @@ Details will be added later.
 - Examine difficult modules including uninterpreted functions and bit-vectors.
 - Rearrange modules; many functions are in wrong places.
 - Rewrite ToString() for pretty-printing.
+- Standardize the use of %A and %O.

@@ -9,11 +9,9 @@ open Int
 open Real
 
 // 9x9 matrix of integer variables
-let X = [| 
-          for i in 0..8 ->
+let X = [| for i in 0..8 ->
              [| for j in 0..8 do 
-                    yield Int(sprintf "x_%i_%i" (i+1) (j+1)) |] 
-           |]
+                    yield Int(sprintf "x_%i_%i" (i+1) (j+1)) |] |]
 
 // each cell contains a value in {1, ..., 9}
 let cells = [| for i in 0..8 do
