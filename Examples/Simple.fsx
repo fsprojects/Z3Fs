@@ -1,7 +1,6 @@
 ﻿#r "../Microsoft.Z3.dll"
 #r "../Z3Fs/bin/Debug/Z3Fs.dll"
 
-open Microsoft.Z3
 open Microsoft.Z3.FSharp
 open Common
 open Bool

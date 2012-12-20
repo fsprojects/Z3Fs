@@ -1,7 +1,6 @@
 ﻿#r "../Microsoft.Z3.dll"
 #r "../Z3Fs/bin/Debug/Z3Fs.dll"
 
-open Microsoft.Z3
 open Microsoft.Z3.FSharp
 open Common
 open Bool
@@ -14,13 +13,13 @@ let booleanExample1() =
     let p = Bool "p"
     let q = Bool "q"
     let r = Bool "r"
-    Z3.Solve(p =>. q, r <=>. (!. q), (!. p) ||. r)
+    Z3.Solve(p =>. q, r =. (!. q), (!. p) ||. r)
 
 let booleanExample2() =
     let p = Bool("p")
     let q = Bool("q")
     let r = Bool("r")
-    Z3.Solve(Implies(p, q), r <=>. Not(q), Or [|Not(p); r|])
+    Z3.Solve(Implies(p, q), r =. Not(q), Or [|Not(p); r|])
 
 let booleanExample3() =
     let p = Bool("p")
