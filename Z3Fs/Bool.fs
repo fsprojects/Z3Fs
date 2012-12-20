@@ -42,10 +42,6 @@ type BoolArith with
     static member (=>.)(BoolExpr p, q: bool) = mkImplies p (mkBool q)
     static member (=>.)(p: bool, BoolExpr q) = mkImplies (mkBool p) q
     static member (=>.)(p: bool, q: bool) = mkImplies (mkBool p) (mkBool q)    
-    static member (<=>.)(BoolExpr p, BoolExpr q) = mkEquiv p q
-    static member (<=>.)(BoolExpr p, q: bool) = mkEquiv p (mkBool q)
-    static member (<=>.)(p: bool, BoolExpr q) = mkEquiv (mkBool p) q
-    static member (<=>.)(p: bool, q: bool) = mkEquiv (mkBool p) (mkBool q)
     static member (=.)(BoolExpr p, BoolExpr q) = mkEquiv p q
     static member (=.)(BoolExpr p, q: bool) = mkEquiv p (mkBool q)
     static member (=.)(p: bool, BoolExpr q) = mkEquiv (mkBool p) q
@@ -105,13 +101,14 @@ type Z3 =
         for (BoolExpr expr) in xs do
             solver.Assert expr
         let result = solver.Check()
-        let m = solver.Model
-        printfn "["
-        m.Decls
-        |> Seq.map (fun d -> sprintf " %O = %O" d.Name m.[d])
-        |> fun s -> String.Join(",\n", s)
-        |> printfn "%s"
-        printfn "]"
+        if result = Status.SATISFIABLE then
+            let m = solver.Model
+            printfn "["
+            m.Decls
+            |> Seq.map (fun d -> sprintf " %O = %O" d.Name m.[d])
+            |> fun s -> String.Join(",\n", s)
+            |> printfn "%s"
+            printfn "]"
         result
 
     static member Simplify(BoolExpr f, [<ParamArray>] options: (string * _) []) = 
