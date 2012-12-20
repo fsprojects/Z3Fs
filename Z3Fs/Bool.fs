@@ -106,9 +106,11 @@ type Z3 =
             solver.Assert expr
         let result = solver.Check()
         let m = solver.Model
-        printf "[ "
-        for d in m.Decls do
-            printf "%O = %O, " d.Name m.[d]
+        printfn "["
+        m.Decls
+        |> Seq.map (fun d -> sprintf " %O = %O" d.Name m.[d])
+        |> fun s -> String.Join(",\n", s)
+        |> printfn "%s"
         printfn "]"
         result
 
