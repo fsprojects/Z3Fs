@@ -12,23 +12,23 @@ with member x.Expr = match x with RealExpr expr -> expr
 [<AutoOpen>]
 module internal RealUtils =
     let inline mkReal (x: float) = getContext().MkReal(string x)
-    let inline add (x: RealExpr) (y: RealExpr) = getContext().MkAdd(x, y) :?> RealExpr |> RealExpr
-    let inline subtract (x: RealExpr) (y: RealExpr) = getContext().MkSub(x, y) :?> RealExpr |> RealExpr
-    let inline multiply (x: RealExpr) (y: RealExpr) = getContext().MkMul(x, y) :?> RealExpr |> RealExpr
-    let inline divide (x: RealExpr) (y: RealExpr) = getContext().MkDiv(x, y) :?> RealExpr |> RealExpr
-    let inline exp (x: RealExpr) y =
+    let inline add x y = getContext().MkAdd(x, y) :?> RealExpr |> RealExpr
+    let inline subtract x y = getContext().MkSub(x, y) :?> RealExpr |> RealExpr
+    let inline multiply x y = getContext().MkMul(x, y) :?> RealExpr |> RealExpr
+    let inline divide x y = getContext().MkDiv(x, y) :?> RealExpr |> RealExpr
+    let inline exp x y =
             let rec loop i acc =
                 if i = 0I then acc
                 else loop (i-1I) (getContext().MkMul(acc, x))
             if y = 0I then (mkReal 0.) :> RealExpr |> RealExpr
             elif y > 0I then loop (y-1I) x :?> RealExpr |> RealExpr
             else failwith "Coefficient should be a non-negative integer"
-    let inline gt (x: RealExpr) (y: RealExpr) = getContext().MkGt(x, y) |> BoolExpr
-    let inline eq (x: RealExpr) (y: RealExpr) = getContext().MkEq(x, y) |> BoolExpr
-    let inline ge (x: RealExpr) (y: RealExpr) = getContext().MkGe(x, y) |> BoolExpr
-    let inline lt (x: RealExpr) (y: RealExpr) = getContext().MkLt(x, y) |> BoolExpr
-    let inline ueq (x: RealExpr) (y: RealExpr) = getContext().MkDistinct(x, y) |> BoolExpr
-    let inline le (x: RealExpr) (y: RealExpr) = getContext().MkLe(x, y) |> BoolExpr
+    let inline gt x y = getContext().MkGt(x, y) |> BoolExpr
+    let inline eq x y = getContext().MkEq(x, y) |> BoolExpr
+    let inline ge x y = getContext().MkGe(x, y) |> BoolExpr
+    let inline lt x y = getContext().MkLt(x, y) |> BoolExpr
+    let inline ueq x y = getContext().MkDistinct(x, y) |> BoolExpr
+    let inline le x y = getContext().MkLe(x, y) |> BoolExpr
     let inline distinct (xs: Expr []) = getContext().MkDistinct xs |> BoolExpr
     let inline mkITE b expr1 expr2 = getContext().MkITE(b, expr1, expr2) :?> RealExpr |> RealExpr
 

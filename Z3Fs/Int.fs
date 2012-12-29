@@ -14,24 +14,24 @@ with member x.Expr = match x with IntExpr expr -> expr
 [<AutoOpen>]
 module internal IntUtils =
     let inline mkInt (x: bigint) = getContext().MkInt(string x)
-    let inline add (x: IntExpr) (y: IntExpr) = getContext().MkAdd(x, y) :?> IntExpr |> IntExpr
-    let inline subtract (x: IntExpr) (y: IntExpr) = getContext().MkSub(x, y) :?> IntExpr |> IntExpr
-    let inline multiply (x: IntExpr) (y: IntExpr) = getContext().MkMul(x, y) :?> IntExpr |> IntExpr
-    let inline divide (x: IntExpr) (y: IntExpr) = getContext().MkDiv(x, y) :?> IntExpr |> IntExpr
-    let inline exp (x: IntExpr) (y) =
+    let inline add x y = getContext().MkAdd(x, y) :?> IntExpr |> IntExpr
+    let inline subtract x y = getContext().MkSub(x, y) :?> IntExpr |> IntExpr
+    let inline multiply x y = getContext().MkMul(x, y) :?> IntExpr |> IntExpr
+    let inline divide x y = getContext().MkDiv(x, y) :?> IntExpr |> IntExpr
+    let inline exp x y =
             let rec loop i acc =
                 if i = 0I then acc
                 else loop (i-1I) (getContext().MkMul(acc, x))
             if y = 0I then (mkInt 0I) :> IntExpr |> IntExpr
             elif y > 0I then loop (y-1I) x :?> IntExpr |> IntExpr
             else failwith "Coefficient should be a non-negative integer"
-    let inline gt (x: IntExpr) (y: IntExpr) = getContext().MkGt(x, y) |> BoolExpr
-    let inline eq (x: IntExpr) (y: IntExpr) = getContext().MkEq(x, y) |> BoolExpr
-    let inline ge (x: IntExpr) (y: IntExpr) = getContext().MkGe(x, y) |> BoolExpr
-    let inline lt (x: IntExpr) (y: IntExpr) = getContext().MkLt(x, y) |> BoolExpr
-    let inline ueq (x: IntExpr) (y: IntExpr) = getContext().MkDistinct(x, y) |> BoolExpr
-    let inline le (x: IntExpr) (y: IntExpr) = getContext().MkLe(x, y) |> BoolExpr
-    let inline distinct (xs: Expr []) = getContext().MkDistinct xs |> BoolExpr
+    let inline gt x y = getContext().MkGt(x, y) |> BoolExpr
+    let inline eq x y = getContext().MkEq(x, y) |> BoolExpr
+    let inline ge x y = getContext().MkGe(x, y) |> BoolExpr
+    let inline lt x y = getContext().MkLt(x, y) |> BoolExpr
+    let inline ueq x y = getContext().MkDistinct(x, y) |> BoolExpr
+    let inline le x y = getContext().MkLe(x, y) |> BoolExpr
+    let inline distinct xs = getContext().MkDistinct xs |> BoolExpr
     let inline mkITE b expr1 expr2 = getContext().MkITE(b, expr1, expr2) :?> IntExpr |> IntExpr
 
 type IntArith with

@@ -18,11 +18,11 @@ type Microsoft.Z3.Solver with
 [<AutoOpen>]
 module internal BoolUtils =
     let inline mkBool b = getContext().MkBool(b)
-    let inline mkAnd (x: BoolExpr) (y: BoolExpr) = getContext().MkAnd(x, y) |> BoolExpr
-    let inline mkOr (x: BoolExpr) (y: BoolExpr) = getContext().MkOr(x, y) |> BoolExpr
-    let inline mkNot (x: BoolExpr) = getContext().MkNot(x) |> BoolExpr
-    let inline mkImplies (x: BoolExpr) (y: BoolExpr) = getContext().MkImplies(x, y) |> BoolExpr
-    let inline mkEquiv (x: BoolExpr) (y: BoolExpr) = getContext().MkEq(x, y) |> BoolExpr
+    let inline mkAnd x y = getContext().MkAnd(x, y) |> BoolExpr
+    let inline mkOr x y = getContext().MkOr(x, y) |> BoolExpr
+    let inline mkNot x = getContext().MkNot(x) |> BoolExpr
+    let inline mkImplies x y = getContext().MkImplies(x, y) |> BoolExpr
+    let inline mkEquiv x y = getContext().MkEq(x, y) |> BoolExpr
     let inline mkTrue() = getContext().MkTrue() |> BoolExpr
     let inline mkFalse() = getContext().MkFalse() |> BoolExpr
     let inline mkDistinct (xs: Expr []) = getContext().MkDistinct xs |> BoolExpr
@@ -63,8 +63,10 @@ let Or (args: BoolArith []) = Array.reduce (||.) args
 let Implies (arg1: BoolArith, arg2: BoolArith) = arg1 =>. arg2
 let Not (arg: BoolArith) = !. arg
 
-let inline Distinct (xs: ^T []) = (^T : (static member Distinct : ^T [] -> BoolArith) (xs)) 
-let inline If (b: BoolArith, expr1: ^T, expr2: ^T) = (^T : (static member If : BoolArith * ^T * ^T -> BoolArith) (b, expr1, expr2))
+let inline Distinct (xs: ^T []) = 
+    (^T : (static member Distinct : ^T [] -> BoolArith) (xs)) 
+let inline If (b: BoolArith, expr1: ^T, expr2: ^T) = 
+    (^T : (static member If : BoolArith * ^T * ^T -> BoolArith) (b, expr1, expr2))
 
 type Val =
     | Bool of bool
