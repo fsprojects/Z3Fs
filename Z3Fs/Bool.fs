@@ -30,32 +30,30 @@ module internal BoolUtils =
     
 type BoolArith with    
     static member (&&.)(BoolExpr p, BoolExpr q) = mkAnd p q    
-    static member (&&.)(BoolExpr p, q: bool) = mkAnd p (mkBool q)
-    static member (&&.)(p: bool, BoolExpr q) = mkAnd (mkBool p) q
-    static member (&&.)(p: bool, q: bool) = mkAnd (mkBool p) (mkBool q)
+    static member (&&.)(BoolExpr p, q) = mkAnd p (mkBool q)
+    static member (&&.)(p, BoolExpr q) = mkAnd (mkBool p) q
+    static member (&&.)(p, q) = mkAnd (mkBool p) (mkBool q)
     static member (||.)(BoolExpr p, BoolExpr q) = mkOr p q
-    static member (||.)(BoolExpr p, q: bool) = mkOr p (mkBool q)
-    static member (||.)(p: bool, BoolExpr q) = mkOr (mkBool p) q
-    static member (||.)(p: bool, q: bool) = mkOr (mkBool p) (mkBool q)
+    static member (||.)(BoolExpr p, q) = mkOr p (mkBool q)
+    static member (||.)(p, BoolExpr q) = mkOr (mkBool p) q
+    static member (||.)(p, q) = mkOr (mkBool p) (mkBool q)
     static member (!.) (BoolExpr p) = mkNot p
-    static member (!.) (p: bool) = mkNot (mkBool p)
+    static member (!.) (p) = mkNot (mkBool p)
     static member (=>.)(BoolExpr p, BoolExpr q) = mkImplies p q
-    static member (=>.)(BoolExpr p, q: bool) = mkImplies p (mkBool q)
-    static member (=>.)(p: bool, BoolExpr q) = mkImplies (mkBool p) q
-    static member (=>.)(p: bool, q: bool) = mkImplies (mkBool p) (mkBool q)    
+    static member (=>.)(BoolExpr p, q) = mkImplies p (mkBool q)
+    static member (=>.)(p, BoolExpr q) = mkImplies (mkBool p) q
+    static member (=>.)(p, q) = mkImplies (mkBool p) (mkBool q)    
     static member (=.)(BoolExpr p, BoolExpr q) = mkEquiv p q
-    static member (=.)(BoolExpr p, q: bool) = mkEquiv p (mkBool q)
-    static member (=.)(p: bool, BoolExpr q) = mkEquiv (mkBool p) q
-    static member (=.)(p: bool, q: bool) = mkEquiv (mkBool p) (mkBool q)
+    static member (=.)(BoolExpr p, q) = mkEquiv p (mkBool q)
+    static member (=.)(p, BoolExpr q) = mkEquiv (mkBool p) q
+    static member (=.)(p, q) = mkEquiv (mkBool p) (mkBool q)
     static member Distinct xs = Array.map (fun (BoolExpr expr) -> expr :> Expr) xs |> mkDistinct
     static member If(BoolExpr b, BoolExpr expr1, BoolExpr expr2) = mkITE b expr1 expr2
 
-let internal mkBoolVar =
+/// Return a bool const with supplied name
+let Bool(s: string) = 
     let context = getContext()
-    fun (s: string) -> context.MkBoolConst s 
-
-/// Return an int const with supplied name
-let Bool = mkBoolVar >> BoolExpr
+    context.MkBoolConst s |> BoolExpr
 
 let True = mkTrue()
 let False = mkFalse()
@@ -74,7 +72,7 @@ type Val =
     | Double of float
 
 type Overloads = Overloads with
-    static member ($)(Overloads, b: bool) = fun (s: string) -> s, Bool b
+    static member ($)(Overloads, b) = fun (s: string) -> s, Bool b
     static member ($)(Overloads, i: uint32) = fun (s: string) -> s, UInt i
     static member ($)(Overloads, f: float) = fun (s: string) -> s, Double f
 

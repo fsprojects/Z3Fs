@@ -16,7 +16,7 @@ module internal RealUtils =
     let inline subtract (x: RealExpr) (y: RealExpr) = getContext().MkSub(x, y) :?> RealExpr |> RealExpr
     let inline multiply (x: RealExpr) (y: RealExpr) = getContext().MkMul(x, y) :?> RealExpr |> RealExpr
     let inline divide (x: RealExpr) (y: RealExpr) = getContext().MkDiv(x, y) :?> RealExpr |> RealExpr
-    let inline exp (x: RealExpr) (y: bigint) =
+    let inline exp (x: RealExpr) y =
             let rec loop i acc =
                 if i = 0I then acc
                 else loop (i-1I) (getContext().MkMul(acc, x))
@@ -34,56 +34,54 @@ module internal RealUtils =
 
 type RealArith with
     static member (+)(RealExpr x, RealExpr y) = add x y
-    static member (+)(RealExpr x, y: float) = add x (mkReal y)
-    static member (+)(x: float, RealExpr y) = add (mkReal x) y
-    static member (+)(x: float, y: float) = add (mkReal x) (mkReal y)
+    static member (+)(RealExpr x, y) = add x (mkReal y)
+    static member (+)(x, RealExpr y) = add (mkReal x) y
+    static member (+)(x, y) = add (mkReal x) (mkReal y)
     static member (-)(RealExpr x, RealExpr y) = subtract x y
-    static member (-)(RealExpr x, y: float) = subtract x (mkReal y)
-    static member (-)(x: float, RealExpr y) = subtract (mkReal x) y
-    static member (-)(x: float, y: float) = subtract (mkReal x) (mkReal y)
+    static member (-)(RealExpr x, y) = subtract x (mkReal y)
+    static member (-)(x, RealExpr y) = subtract (mkReal x) y
+    static member (-)(x, y) = subtract (mkReal x) (mkReal y)
     static member (*)(RealExpr x, RealExpr y) = multiply x y
-    static member (*)(RealExpr x, y: float) = multiply x (mkReal y)
-    static member (*)(x: float, RealExpr y) = multiply (mkReal x) y
-    static member (*)(x: float, y: float) = multiply (mkReal x) (mkReal y)  
+    static member (*)(RealExpr x, y) = multiply x (mkReal y)
+    static member (*)(x, RealExpr y) = multiply (mkReal x) y
+    static member (*)(x, y) = multiply (mkReal x) (mkReal y)  
     static member (/)(RealExpr x, RealExpr y) = divide x y
-    static member (/)(RealExpr x, y: float) = divide x (mkReal y)
-    static member (/)(x: float, RealExpr y) = divide (mkReal x) y
-    static member (/)(x: float, y: float) = divide (mkReal x) (mkReal y)  
-    static member Pow(RealExpr x, y: bigint) = exp x y
-    static member Pow(x: float, y: bigint) = exp (mkReal x) y
+    static member (/)(RealExpr x, y) = divide x (mkReal y)
+    static member (/)(x, RealExpr y) = divide (mkReal x) y
+    static member (/)(x, y) = divide (mkReal x) (mkReal y)  
+    static member Pow(RealExpr x, y) = exp x y
+    static member Pow(x, y) = exp (mkReal x) y
     static member (>.)(RealExpr x, RealExpr y) = gt x y
-    static member (>.)(RealExpr x, y: float) = gt x (mkReal y)
-    static member (>.)(x: float, RealExpr y) = gt (mkReal x) y
-    static member (>.)(x: float, y: float) = gt (mkReal x) (mkReal y)  
+    static member (>.)(RealExpr x, y) = gt x (mkReal y)
+    static member (>.)(x, RealExpr y) = gt (mkReal x) y
+    static member (>.)(x, y) = gt (mkReal x) (mkReal y)  
     static member (=.)(RealExpr x, RealExpr y) = eq x y
-    static member (=.)(RealExpr x, y: float) = eq x (mkReal y)
-    static member (=.)(x: float, RealExpr y) = eq (mkReal x) y
-    static member (=.)(x: float, y: float) = eq (mkReal x) (mkReal y)  
+    static member (=.)(RealExpr x, y) = eq x (mkReal y)
+    static member (=.)(x, RealExpr y) = eq (mkReal x) y
+    static member (=.)(x, y) = eq (mkReal x) (mkReal y)  
     static member (>=.)(RealExpr x, RealExpr y) = ge x y
-    static member (>=.)(RealExpr x, y: float) = ge x (mkReal y)
-    static member (>=.)(x: float, RealExpr y) = ge (mkReal x) y
-    static member (>=.)(x: float, y: float) = ge (mkReal x) (mkReal y)  
+    static member (>=.)(RealExpr x, y) = ge x (mkReal y)
+    static member (>=.)(x, RealExpr y) = ge (mkReal x) y
+    static member (>=.)(x, y) = ge (mkReal x) (mkReal y)  
     static member (<.)(RealExpr x, RealExpr y) = lt x y
-    static member (<.)(RealExpr x, y: float) = lt x (mkReal y)
-    static member (<.)(x: float, RealExpr y) = lt (mkReal x) y
-    static member (<.)(x: float, y: float) = lt (mkReal x) (mkReal y)  
+    static member (<.)(RealExpr x, y) = lt x (mkReal y)
+    static member (<.)(x, RealExpr y) = lt (mkReal x) y
+    static member (<.)(x, y) = lt (mkReal x) (mkReal y)  
     static member (<>.)(RealExpr x, RealExpr y) = ueq x y
-    static member (<>.)(RealExpr x, y: float) = ueq x (mkReal y)
-    static member (<>.)(x: float, RealExpr y) = ueq (mkReal x) y
-    static member (<>.)(x: float, y: float) = ueq (mkReal x) (mkReal y)  
+    static member (<>.)(RealExpr x, y) = ueq x (mkReal y)
+    static member (<>.)(x, RealExpr y) = ueq (mkReal x) y
+    static member (<>.)(x, y) = ueq (mkReal x) (mkReal y)  
     static member (<=.)(RealExpr x, RealExpr y) = le x y
-    static member (<=.)(RealExpr x, y: float) = le x (mkReal y)
-    static member (<=.)(x: float, RealExpr y) = le (mkReal x) y
-    static member (<=.)(x: float, y: float) = le (mkReal x) (mkReal y)
+    static member (<=.)(RealExpr x, y) = le x (mkReal y)
+    static member (<=.)(x, RealExpr y) = le (mkReal x) y
+    static member (<=.)(x, y) = le (mkReal x) (mkReal y)
     static member Distinct xs = Array.map (fun (RealExpr expr) -> expr :> Expr) xs |> distinct
     static member If(BoolExpr b, RealExpr expr1, RealExpr expr2) = mkITE b expr1 expr2
 
-let internal mkRealVar =
+/// Return a real const with supplied name
+let Real(s: string) =
     let context = getContext()
-    fun (s: string) -> context.MkRealConst s 
-
-/// Return an int const with supplied name
-let Real = mkRealVar >> RealExpr
+    context.MkRealConst s |> RealExpr
 
 type Microsoft.Z3.FSharp.Bool.Z3 with
     static member Simplify(RealExpr f, [<ParamArray>] options: (string * _) []) = 

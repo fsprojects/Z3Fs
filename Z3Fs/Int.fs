@@ -18,7 +18,7 @@ module internal IntUtils =
     let inline subtract (x: IntExpr) (y: IntExpr) = getContext().MkSub(x, y) :?> IntExpr |> IntExpr
     let inline multiply (x: IntExpr) (y: IntExpr) = getContext().MkMul(x, y) :?> IntExpr |> IntExpr
     let inline divide (x: IntExpr) (y: IntExpr) = getContext().MkDiv(x, y) :?> IntExpr |> IntExpr
-    let inline exp (x: IntExpr) (y: bigint) =
+    let inline exp (x: IntExpr) (y) =
             let rec loop i acc =
                 if i = 0I then acc
                 else loop (i-1I) (getContext().MkMul(acc, x))
@@ -36,56 +36,54 @@ module internal IntUtils =
 
 type IntArith with
     static member (+)(IntExpr x, IntExpr y) = add x y
-    static member (+)(IntExpr x, y: bigint) = add x (mkInt y)
-    static member (+)(x: bigint, IntExpr y) = add (mkInt x) y
-    static member (+)(x: bigint, y: bigint) = add (mkInt x) (mkInt y)
+    static member (+)(IntExpr x, y) = add x (mkInt y)
+    static member (+)(x, IntExpr y) = add (mkInt x) y
+    static member (+)(x, y) = add (mkInt x) (mkInt y)
     static member (-)(IntExpr x, IntExpr y) = subtract x y
-    static member (-)(IntExpr x, y: bigint) = subtract x (mkInt y)
-    static member (-)(x: bigint, IntExpr y) = subtract (mkInt x) y
-    static member (-)(x: bigint, y: bigint) = subtract (mkInt x) (mkInt y)
+    static member (-)(IntExpr x, y) = subtract x (mkInt y)
+    static member (-)(x, IntExpr y) = subtract (mkInt x) y
+    static member (-)(x, y) = subtract (mkInt x) (mkInt y)
     static member (*)(IntExpr x, IntExpr y) = multiply x y
-    static member (*)(IntExpr x, y: bigint) = multiply x (mkInt y)
-    static member (*)(x: bigint, IntExpr y) = multiply (mkInt x) y
-    static member (*)(x: bigint, y: bigint) = multiply (mkInt x) (mkInt y) 
+    static member (*)(IntExpr x, y) = multiply x (mkInt y)
+    static member (*)(x, IntExpr y) = multiply (mkInt x) y
+    static member (*)(x, y) = multiply (mkInt x) (mkInt y) 
     static member (/)(IntExpr x, IntExpr y) = divide x y
-    static member (/)(IntExpr x, y: bigint) = divide x (mkInt y)
-    static member (/)(x: bigint, IntExpr y) = divide (mkInt x) y
-    static member (/)(x: bigint, y: bigint) = divide (mkInt x) (mkInt y)   
-    static member Pow(IntExpr x, y: bigint) = exp x y // use this name instead of ( ** )
-    static member Pow(x: bigint, y: bigint) = exp (mkInt x) y
+    static member (/)(IntExpr x, y) = divide x (mkInt y)
+    static member (/)(x, IntExpr y) = divide (mkInt x) y
+    static member (/)(x, y) = divide (mkInt x) (mkInt y)   
+    static member Pow(IntExpr x, y) = exp x y // use this name instead of ( ** )
+    static member Pow(x, y) = exp (mkInt x) y
     static member (>.)(IntExpr x, IntExpr y) = gt x y
-    static member (>.)(IntExpr x, y: bigint) = gt x (mkInt y)
-    static member (>.)(x: bigint, IntExpr y) = gt (mkInt x) y
-    static member (>.)(x: bigint, y: bigint) = gt (mkInt x) (mkInt y)  
+    static member (>.)(IntExpr x, y) = gt x (mkInt y)
+    static member (>.)(x, IntExpr y) = gt (mkInt x) y
+    static member (>.)(x, y) = gt (mkInt x) (mkInt y)  
     static member (=.)(IntExpr x, IntExpr y) = eq x y
-    static member (=.)(IntExpr x, y: bigint) = eq x (mkInt y)
-    static member (=.)(x: bigint, IntExpr y) = eq (mkInt x) y
-    static member (=.)(x: bigint, y: bigint) = eq (mkInt x) (mkInt y)  
+    static member (=.)(IntExpr x, y) = eq x (mkInt y)
+    static member (=.)(x, IntExpr y) = eq (mkInt x) y
+    static member (=.)(x, y) = eq (mkInt x) (mkInt y)  
     static member (>=.)(IntExpr x, IntExpr y) = ge x y
-    static member (>=.)(IntExpr x, y: bigint) = ge x (mkInt y)
-    static member (>=.)(x: bigint, IntExpr y) = ge (mkInt x) y
-    static member (>=.)(x: bigint, y: bigint) = ge (mkInt x) (mkInt y)  
+    static member (>=.)(IntExpr x, y) = ge x (mkInt y)
+    static member (>=.)(x, IntExpr y) = ge (mkInt x) y
+    static member (>=.)(x, y) = ge (mkInt x) (mkInt y)  
     static member (<.)(IntExpr x, IntExpr y) = lt x y
-    static member (<.)(IntExpr x, y: bigint) = lt x (mkInt y)
-    static member (<.)(x: bigint, IntExpr y) = lt (mkInt x) y
-    static member (<.)(x: bigint, y: bigint) = lt (mkInt x) (mkInt y)  
+    static member (<.)(IntExpr x, y) = lt x (mkInt y)
+    static member (<.)(x, IntExpr y) = lt (mkInt x) y
+    static member (<.)(x, y) = lt (mkInt x) (mkInt y)  
     static member (<>.)(IntExpr x, IntExpr y) = ueq x y
-    static member (<>.)(IntExpr x, y: bigint) = ueq x (mkInt y)
-    static member (<>.)(x: bigint, IntExpr y) = ueq (mkInt x) y
-    static member (<>.)(x: bigint, y: bigint) = ueq (mkInt x) (mkInt y)  
+    static member (<>.)(IntExpr x, y) = ueq x (mkInt y)
+    static member (<>.)(x, IntExpr y) = ueq (mkInt x) y
+    static member (<>.)(x, y) = ueq (mkInt x) (mkInt y)  
     static member (<=.)(IntExpr x, IntExpr y) = le x y
-    static member (<=.)(IntExpr x, y: bigint) = le x (mkInt y)
-    static member (<=.)(x: bigint, IntExpr y) = le (mkInt x) y
-    static member (<=.)(x: bigint, y: bigint) = le (mkInt x) (mkInt y)
+    static member (<=.)(IntExpr x, y) = le x (mkInt y)
+    static member (<=.)(x, IntExpr y) = le (mkInt x) y
+    static member (<=.)(x, y) = le (mkInt x) (mkInt y)
     static member Distinct xs = Array.map (fun (IntExpr expr) -> expr :> Expr) xs |> mkDistinct
     static member If(BoolExpr b, IntExpr expr1, IntExpr expr2) = mkITE b expr1 expr2
 
-let internal mkIntVar =
-    let context = getContext()
-    fun (s: string) -> context.MkIntConst s 
-
 /// Return an int const with supplied name
-let Int = mkIntVar >> IntExpr
+let Int(s: string) = 
+    let context = getContext()
+    context.MkIntConst s |> IntExpr
 
 type Microsoft.Z3.FSharp.Bool.Z3 with
     static member Simplify(IntExpr f, [<ParamArray>] options: (string * _) []) = 
