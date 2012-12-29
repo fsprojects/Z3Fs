@@ -69,6 +69,7 @@
     <Compile Include="Bool.fs" />
     <Compile Include="Int.fs" />
     <Compile Include="Real.fs" />
+    <Compile Include="BitVec.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Z3">
