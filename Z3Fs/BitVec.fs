@@ -12,18 +12,31 @@ with member x.Expr = match x with BitVecExpr expr -> expr
 [<AutoOpen>]
 module internal IntUtils =
     let inline mkBitVec (v: int) (size: uint32) = getContext().MkBV(v, size)
-    let inline add (x: BitVecExpr) (y: BitVecExpr) = getContext().MkBVAdd(x, y) |> BitVecExpr
-    let inline subtract (x: BitVecExpr) (y: BitVecExpr) = getContext().MkBVSub(x, y) |> BitVecExpr
-    let inline multiply (x: BitVecExpr) (y: BitVecExpr) = getContext().MkBVMul(x, y) |> BitVecExpr
-    let inline divide (x: BitVecExpr) (y: BitVecExpr) = getContext().MkBVSDiv(x, y) |> BitVecExpr
-    let inline gt (x: BitVecExpr) (y: BitVecExpr) = getContext().MkBVSGT(x, y) |> BoolExpr
-    let inline eq (x: BitVecExpr) (y: BitVecExpr) = getContext().MkEq(x, y) |> BoolExpr
-    let inline ge (x: BitVecExpr) (y: BitVecExpr) = getContext().MkBVSGE(x, y) |> BoolExpr
-    let inline lt (x: BitVecExpr) (y: BitVecExpr) = getContext().MkBVSLT(x, y) |> BoolExpr
-    let inline ueq (x: BitVecExpr) (y: BitVecExpr) = getContext().MkDistinct(x, y) |> BoolExpr
-    let inline le (x: BitVecExpr) (y: BitVecExpr) = getContext().MkBVSLE(x, y) |> BoolExpr
-    let inline distinct (xs: Expr []) = getContext().MkDistinct xs |> BoolExpr
+    let inline add x y = getContext().MkBVAdd(x, y) |> BitVecExpr
+    let inline subtract x y = getContext().MkBVSub(x, y) |> BitVecExpr
+    let inline multiply x y = getContext().MkBVMul(x, y) |> BitVecExpr
+    let inline sdiv x y = getContext().MkBVSDiv(x, y) |> BitVecExpr
+    let inline smod x y = getContext().MkBVSMod(x, y) |> BitVecExpr
+    let inline shl x y = getContext().MkBVSHL(x, y) |> BitVecExpr
+    let inline ashr x y = getContext().MkBVASHR(x, y) |> BitVecExpr
+    let inline bvand x y = getContext().MkBVAND(x, y) |> BitVecExpr
+    let inline bvor x y = getContext().MkBVOR(x, y) |> BitVecExpr
+    let inline bvnot x = getContext().MkBVNeg(x) |> BitVecExpr
+    let inline gt x y = getContext().MkBVSGT(x, y) |> BoolExpr
+    let inline eq x y = getContext().MkEq(x, y) |> BoolExpr
+    let inline ge x y = getContext().MkBVSGE(x, y) |> BoolExpr
+    let inline lt x y = getContext().MkBVSLT(x, y) |> BoolExpr
+    let inline ueq x y = getContext().MkDistinct(x, y) |> BoolExpr
+    let inline le x y = getContext().MkBVSLE(x, y) |> BoolExpr
+    let inline distinct xs = getContext().MkDistinct xs |> BoolExpr
     let inline mkITE b expr1 expr2 = getContext().MkITE(b, expr1, expr2) :?> BitVecExpr |> BitVecExpr
+    let inline ult x  y = getContext().MkBVULT(x, y) |> BoolExpr
+    let inline ule x y = getContext().MkBVULT(x, y) |> BoolExpr
+    let inline ugt x y = getContext().MkBVULT(x, y) |> BoolExpr
+    let inline uge x y = getContext().MkBVULT(x, y) |> BoolExpr
+    let inline udiv x y = getContext().MkBVUDiv(x, y) |> BitVecExpr
+    let inline umod x y = getContext().MkBVURem(x, y) |> BitVecExpr
+    let inline lshr x y = getContext().MkBVLSHR(x, y) |> BitVecExpr
 
 type BitVecArith with
     static member (+)(BitVecExpr x, BitVecExpr y) = add x y
@@ -38,10 +51,32 @@ type BitVecArith with
     static member (*)(BitVecExpr x, y) = multiply x (mkBitVec y x.SortSize)
     static member (*)(x, BitVecExpr y) = multiply (mkBitVec x y.SortSize) y
     static member (*)(x, y) = multiply (mkBitVec x 32u) (mkBitVec y 32u) 
-    static member (/)(BitVecExpr x, BitVecExpr y) = divide x y
-    static member (/)(BitVecExpr x, y) = divide x (mkBitVec y x.SortSize)
-    static member (/)(x, BitVecExpr y) = divide (mkBitVec x y.SortSize) y
-    static member (/)(x, y) = divide (mkBitVec x 32u) (mkBitVec y 32u)   
+    static member (/)(BitVecExpr x, BitVecExpr y) = sdiv x y
+    static member (/)(BitVecExpr x, y) = sdiv x (mkBitVec y x.SortSize)
+    static member (/)(x, BitVecExpr y) = sdiv (mkBitVec x y.SortSize) y
+    static member (/)(x, y) = sdiv (mkBitVec x 32u) (mkBitVec y 32u)  
+    static member (%)(BitVecExpr x, BitVecExpr y) = smod x y
+    static member (%)(BitVecExpr x, y) = smod x (mkBitVec y x.SortSize)
+    static member (%)(x, BitVecExpr y) = smod (mkBitVec x y.SortSize) y
+    static member (%)(x, y) = smod (mkBitVec x 32u) (mkBitVec y 32u)
+    static member (<<<)(BitVecExpr x, BitVecExpr y) = shl x y
+    static member (<<<)(BitVecExpr x, y) = shl x (mkBitVec y x.SortSize)
+    static member (<<<)(x, BitVecExpr y) = shl (mkBitVec x y.SortSize) y
+    static member (<<<)(x, y) = shl (mkBitVec x 32u) (mkBitVec y 32u) 
+    static member (>>>)(BitVecExpr x, BitVecExpr y) = ashr x y
+    static member (>>>)(BitVecExpr x, y) = ashr x (mkBitVec y x.SortSize)
+    static member (>>>)(x, BitVecExpr y) = ashr (mkBitVec x y.SortSize) y
+    static member (>>>)(x, y) = ashr (mkBitVec x 32u) (mkBitVec y 32u)  
+    static member (&&&)(BitVecExpr x, BitVecExpr y) = bvand x y
+    static member (&&&)(BitVecExpr x, y) = bvand x (mkBitVec y x.SortSize)
+    static member (&&&)(x, BitVecExpr y) = bvand (mkBitVec x y.SortSize) y
+    static member (&&&)(x, y) = bvand (mkBitVec x 32u) (mkBitVec y 32u) 
+    static member (|||)(BitVecExpr x, BitVecExpr y) = bvor x y
+    static member (|||)(BitVecExpr x, y) = bvor x (mkBitVec y x.SortSize)
+    static member (|||)(x, BitVecExpr y) = bvor (mkBitVec x y.SortSize) y
+    static member (|||)(x, y) = bvor (mkBitVec x 32u) (mkBitVec y 32u)
+    static member (~~~)(BitVecExpr x) = bvnot x 
+    static member (~~~) x = bvnot (mkBitVec x 32u) 
     static member (>.)(BitVecExpr x, BitVecExpr y) = gt x y
     static member (>.)(BitVecExpr x, y) = gt x (mkBitVec y x.SortSize)
     static member (>.)(x, BitVecExpr y) = gt (mkBitVec x y.SortSize) y
@@ -68,8 +103,35 @@ type BitVecArith with
     static member (<=.)(x, y) = le (mkBitVec x 32u) (mkBitVec y 32u)
     static member Distinct xs = Array.map (fun (BitVecExpr expr) -> expr :> Expr) xs |> mkDistinct
     static member If(BoolExpr b, BitVecExpr expr1, BitVecExpr expr2) = mkITE b expr1 expr2
+    static member (<~)(BitVecExpr x, BitVecExpr y) = ult x y
+    static member (<~)(BitVecExpr x, y) = ult x (mkBitVec y x.SortSize)
+    static member (<~)(x, BitVecExpr y) = ult (mkBitVec x y.SortSize) y
+    static member (<~)(x, y) = ult (mkBitVec x 32u) (mkBitVec y 32u)
+    static member (<=~)(BitVecExpr x, BitVecExpr y) = ule x y
+    static member (<=~)(BitVecExpr x, y) = ule x (mkBitVec y x.SortSize)
+    static member (<=~)(x, BitVecExpr y) = ule (mkBitVec x y.SortSize) y
+    static member (<=~)(x, y) = ule (mkBitVec x 32u) (mkBitVec y 32u)
+    static member (>~)(BitVecExpr x, BitVecExpr y) = ugt x y
+    static member (>~)(BitVecExpr x, y) = ugt x (mkBitVec y x.SortSize)
+    static member (>~)(x, BitVecExpr y) = ugt (mkBitVec x y.SortSize) y
+    static member (>~)(x, y) = ugt (mkBitVec x 32u) (mkBitVec y 32u)
+    static member (>=~)(BitVecExpr x, BitVecExpr y) = uge x y
+    static member (>=~)(BitVecExpr x, y) = uge x (mkBitVec y x.SortSize)
+    static member (>=~)(x, BitVecExpr y) = uge (mkBitVec x y.SortSize) y
+    static member (>=~)(x, y) = uge (mkBitVec x 32u) (mkBitVec y 32u)
+    static member (%~)(BitVecExpr x, BitVecExpr y) = umod x y
+    static member (%~)(BitVecExpr x, y) = umod x (mkBitVec y x.SortSize)
+    static member (%~)(x, BitVecExpr y) = umod (mkBitVec x y.SortSize) y
+    static member (%~)(x, y) = umod (mkBitVec x 32u) (mkBitVec y 32u)
+    static member (>>>~)(BitVecExpr x, BitVecExpr y) = lshr x y
+    static member (>>>~)(BitVecExpr x, y) = lshr x (mkBitVec y x.SortSize)
+    static member (>>>~)(x, BitVecExpr y) = lshr (mkBitVec x y.SortSize) y
+    static member (>>>~)(x, y) = lshr (mkBitVec x 32u) (mkBitVec y 32u) 
 
 let BitVec(name: string, size: uint32) =
     let context = getContext()
     context.MkBVConst(name, size) |> BitVecExpr
+
+let BitVecVal(v: int, size: uint32) =
+    mkBitVec v size
 
