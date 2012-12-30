@@ -18,7 +18,7 @@ let bitvecExample1() =
     // -1 is equal to 65535 for 16-bit integers 
     printfn "%O" <| Z3.Simplify(x + y - 1)
 
-    // Creating bit-vector constants
+    // Create bit-vector constants
     let a = BitVecVal(-1, 16u)
     let b = BitVecVal(65535, 16u)
     printfn "%O" <| Z3.Simplify(a =. b)
@@ -29,7 +29,7 @@ let bitvecExample1() =
     printfn "%O" <| Z3.Simplify(c =. d)
 
 let bitvecExample2() =
-    // Create to bit-vectors of size 32
+    // Create two bit-vectors of size 32
     let x = BitVec("x", 32u)
     let y = BitVec("y", 32u)
 
