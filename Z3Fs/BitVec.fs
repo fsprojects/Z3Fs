@@ -133,5 +133,9 @@ let BitVec(name: string, size: uint32) =
     context.MkBVConst(name, size) |> BitVecExpr
 
 let BitVecVal(v: int, size: uint32) =
-    mkBitVec v size
+    mkBitVec v size :> BitVecExpr |> BitVecExpr
+
+type Microsoft.Z3.FSharp.Bool.Z3 with
+    static member Simplify(BitVecExpr f, [<ParamArray>] options: (string * _) []) = 
+        simplify(f, options) :?> BitVecExpr |> BitVecExpr
 

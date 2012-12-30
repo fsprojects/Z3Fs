@@ -112,6 +112,7 @@ type Z3 =
             |> fun s -> String.Join(",\n", s)
             |> printfn "%s"
             printfn "]"
+        else printfn "No solution"
         result
 
     static member Simplify(BoolExpr f, [<ParamArray>] options: (string * _) []) = 
