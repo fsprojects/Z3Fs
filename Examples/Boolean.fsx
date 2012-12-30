@@ -4,7 +4,6 @@
 open Microsoft.Z3.FSharp
 open Common
 open Bool
-open Int
 open Real
 
 // Reference at http://rise4fun.com/Z3Py/tutorialcontent/guide#h21
