@@ -1,5 +1,5 @@
-﻿#r "../Microsoft.Z3.dll"
-#r "../Z3Fs/bin/Debug/Z3Fs.dll"
+﻿#I "../Z3Fs/bin/Debug"#r "Microsoft.Z3.dll"
+#r "Z3Fs.dll"
 
 open Microsoft.Z3.FSharp
 open Common
