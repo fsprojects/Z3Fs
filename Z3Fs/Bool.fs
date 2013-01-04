@@ -6,7 +6,7 @@ open System.Numerics
 open Microsoft.Z3
 open Microsoft.Z3.FSharp.Common
 
-type BoolArith = BoolExpr of BoolExpr
+type Bool = BoolExpr of BoolExpr
 with member x.Expr = match x with BoolExpr expr -> expr
      override x.ToString() = match x with BoolExpr expr -> sprintf "%O" expr
 
@@ -28,7 +28,7 @@ module internal BoolUtils =
     let inline mkDistinct (xs: Expr []) = getContext().MkDistinct xs |> BoolExpr
     let inline mkITE b expr1 expr2 = getContext().MkITE(b, expr1, expr2) :?> BoolExpr |> BoolExpr
     
-type BoolArith with    
+type Bool with    
     static member (&&.)(BoolExpr p, BoolExpr q) = mkAnd p q    
     static member (&&.)(BoolExpr p, q) = mkAnd p (mkBool q)
     static member (&&.)(p, BoolExpr q) = mkAnd (mkBool p) q
@@ -58,15 +58,15 @@ let Bool(s: string) =
 let True = mkTrue()
 let False = mkFalse()
 
-let And (args: BoolArith []) = Array.reduce (&&.) args
-let Or (args: BoolArith []) = Array.reduce (||.) args
-let Implies (arg1: BoolArith, arg2: BoolArith) = arg1 =>. arg2
-let Not (arg: BoolArith) = !. arg
+let And (args: Bool []) = Array.reduce (&&.) args
+let Or (args: Bool []) = Array.reduce (||.) args
+let Implies (arg1: Bool, arg2: Bool) = arg1 =>. arg2
+let Not (arg: Bool) = !. arg
 
 let inline Distinct (xs: ^T []) = 
-    (^T : (static member Distinct : ^T [] -> BoolArith) (xs)) 
-let inline If (b: BoolArith, expr1: ^T, expr2: ^T) = 
-    (^T : (static member If : BoolArith * ^T * ^T -> BoolArith) (b, expr1, expr2))
+    (^T : (static member Distinct : ^T [] -> Bool) (xs)) 
+let inline If (b: Bool, expr1: ^T, expr2: ^T) = 
+    (^T : (static member If : Bool * ^T * ^T -> Bool) (b, expr1, expr2))
 
 type Val =
     | Bool of bool

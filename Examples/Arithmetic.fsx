@@ -11,11 +11,11 @@ open Real
 // Reference from http://rise4fun.com/Z3Py/tutorialcontent/guide#h23
 
 let arithExample1() =
-    let a = Int "a"
-    let b = Int "b"
-    let c = Int "c"
-    let d = Real "d"
-    let e = Real "e"
+    let a = Int("a")
+    let b = Int("b")
+    let c = Int("c")
+    let d = Real("d")
+    let e = Real("e")
     Z3.Solve(a >. b + 2I, a =. 2I * c + 10I, c + b <=. 1000I, d >=. e)
 
 let arithExample2() =

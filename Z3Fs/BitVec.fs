@@ -5,7 +5,7 @@ open Microsoft.Z3
 open Microsoft.Z3.FSharp.Common
 open Microsoft.Z3.FSharp.Bool
 
-type BitVecArith = BitVecExpr of BitVecExpr
+type BitVec = BitVecExpr of BitVecExpr
 with member x.Expr = match x with BitVecExpr expr -> expr
      override x.ToString() = match x with BitVecExpr expr -> sprintf "%O" expr
 
@@ -38,7 +38,7 @@ module internal IntUtils =
     let inline umod x y = getContext().MkBVURem(x, y) |> BitVecExpr
     let inline lshr x y = getContext().MkBVLSHR(x, y) |> BitVecExpr
 
-type BitVecArith with
+type BitVec with
     static member (+)(BitVecExpr x, BitVecExpr y) = add x y
     static member (+)(BitVecExpr x, y) = add x (mkBitVec y x.SortSize)
     static member (+)(x, BitVecExpr y) = add (mkBitVec x y.SortSize) y

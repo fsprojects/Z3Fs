@@ -7,7 +7,7 @@ open Microsoft.Z3
 open Microsoft.Z3.FSharp.Common
 open Microsoft.Z3.FSharp.Bool
 
-type IntArith = IntExpr of IntExpr
+type Int = IntExpr of IntExpr
 with member x.Expr = match x with IntExpr expr -> expr
      override x.ToString() = match x with IntExpr expr -> sprintf "%O" expr
 
@@ -34,7 +34,7 @@ module internal IntUtils =
     let inline distinct xs = getContext().MkDistinct xs |> BoolExpr
     let inline mkITE b expr1 expr2 = getContext().MkITE(b, expr1, expr2) :?> IntExpr |> IntExpr
 
-type IntArith with
+type Int with
     static member (+)(IntExpr x, IntExpr y) = add x y
     static member (+)(IntExpr x, y) = add x (mkInt y)
     static member (+)(x, IntExpr y) = add (mkInt x) y

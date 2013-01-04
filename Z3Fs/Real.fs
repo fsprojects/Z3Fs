@@ -5,7 +5,7 @@ open Microsoft.Z3
 open Microsoft.Z3.FSharp.Common
 open Microsoft.Z3.FSharp.Bool
 
-type RealArith = RealExpr of RealExpr
+type Real = RealExpr of RealExpr
 with member x.Expr = match x with RealExpr expr -> expr
      override x.ToString() = match x with RealExpr expr -> sprintf "%O" expr
 
@@ -32,7 +32,7 @@ module internal RealUtils =
     let inline distinct (xs: Expr []) = getContext().MkDistinct xs |> BoolExpr
     let inline mkITE b expr1 expr2 = getContext().MkITE(b, expr1, expr2) :?> RealExpr |> RealExpr
 
-type RealArith with
+type Real with
     static member (+)(RealExpr x, RealExpr y) = add x y
     static member (+)(RealExpr x, y) = add x (mkReal y)
     static member (+)(x, RealExpr y) = add (mkReal x) y
