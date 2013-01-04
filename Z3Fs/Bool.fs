@@ -32,21 +32,16 @@ type Bool with
     static member (&&.)(BoolExpr p, BoolExpr q) = mkAnd p q    
     static member (&&.)(BoolExpr p, q) = mkAnd p (mkBool q)
     static member (&&.)(p, BoolExpr q) = mkAnd (mkBool p) q
-    static member (&&.)(p, q) = mkAnd (mkBool p) (mkBool q)
     static member (||.)(BoolExpr p, BoolExpr q) = mkOr p q
     static member (||.)(BoolExpr p, q) = mkOr p (mkBool q)
     static member (||.)(p, BoolExpr q) = mkOr (mkBool p) q
-    static member (||.)(p, q) = mkOr (mkBool p) (mkBool q)
     static member (!.) (BoolExpr p) = mkNot p
-    static member (!.) (p) = mkNot (mkBool p)
     static member (=>.)(BoolExpr p, BoolExpr q) = mkImplies p q
     static member (=>.)(BoolExpr p, q) = mkImplies p (mkBool q)
-    static member (=>.)(p, BoolExpr q) = mkImplies (mkBool p) q
-    static member (=>.)(p, q) = mkImplies (mkBool p) (mkBool q)    
+    static member (=>.)(p, BoolExpr q) = mkImplies (mkBool p) q    
     static member (=.)(BoolExpr p, BoolExpr q) = mkEquiv p q
     static member (=.)(BoolExpr p, q) = mkEquiv p (mkBool q)
     static member (=.)(p, BoolExpr q) = mkEquiv (mkBool p) q
-    static member (=.)(p, q) = mkEquiv (mkBool p) (mkBool q)
     static member Distinct xs = Array.map (fun (BoolExpr expr) -> expr :> Expr) xs |> mkDistinct
     static member If(BoolExpr b, BoolExpr expr1, BoolExpr expr2) = mkITE b expr1 expr2
 

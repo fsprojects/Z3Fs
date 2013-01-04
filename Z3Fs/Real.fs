@@ -36,33 +36,26 @@ type Real with
     static member (+)(RealExpr x, RealExpr y) = add x y
     static member (+)(RealExpr x, y) = add x (mkReal y)
     static member (+)(x, RealExpr y) = add (mkReal x) y
-    static member (+)(x, y) = add (mkReal x) (mkReal y)
     static member (-)(RealExpr x, RealExpr y) = subtract x y
     static member (-)(RealExpr x, y) = subtract x (mkReal y)
     static member (-)(x, RealExpr y) = subtract (mkReal x) y
-    static member (-)(x, y) = subtract (mkReal x) (mkReal y)
     static member (*)(RealExpr x, RealExpr y) = multiply x y
     static member (*)(RealExpr x, y) = multiply x (mkReal y)
-    static member (*)(x, RealExpr y) = multiply (mkReal x) y
-    static member (*)(x, y) = multiply (mkReal x) (mkReal y)  
+    static member (*)(x, RealExpr y) = multiply (mkReal x) y 
     static member (/)(RealExpr x, RealExpr y) = divide x y
     static member (/)(RealExpr x, y) = divide x (mkReal y)
     static member (/)(x, RealExpr y) = divide (mkReal x) y
-    static member (/)(x, y) = divide (mkReal x) (mkReal y)  
     static member Pow(RealExpr x, y) = exp x y
     static member Pow(x, y) = exp (mkReal x) y
     static member (>.)(RealExpr x, RealExpr y) = gt x y
     static member (>.)(RealExpr x, y) = gt x (mkReal y)
-    static member (>.)(x, RealExpr y) = gt (mkReal x) y
-    static member (>.)(x, y) = gt (mkReal x) (mkReal y)  
+    static member (>.)(x, RealExpr y) = gt (mkReal x) y 
     static member (=.)(RealExpr x, RealExpr y) = eq x y
     static member (=.)(RealExpr x, y) = eq x (mkReal y)
     static member (=.)(x, RealExpr y) = eq (mkReal x) y
-    static member (=.)(x, y) = eq (mkReal x) (mkReal y)  
     static member (>=.)(RealExpr x, RealExpr y) = ge x y
     static member (>=.)(RealExpr x, y) = ge x (mkReal y)
     static member (>=.)(x, RealExpr y) = ge (mkReal x) y
-    static member (>=.)(x, y) = ge (mkReal x) (mkReal y)  
     static member (<.)(RealExpr x, RealExpr y) = lt x y
     static member (<.)(RealExpr x, y) = lt x (mkReal y)
     static member (<.)(x, RealExpr y) = lt (mkReal x) y
@@ -74,7 +67,6 @@ type Real with
     static member (<=.)(RealExpr x, RealExpr y) = le x y
     static member (<=.)(RealExpr x, y) = le x (mkReal y)
     static member (<=.)(x, RealExpr y) = le (mkReal x) y
-    static member (<=.)(x, y) = le (mkReal x) (mkReal y)
     static member Distinct xs = Array.map (fun (RealExpr expr) -> expr :> Expr) xs |> distinct
     static member If(BoolExpr b, RealExpr expr1, RealExpr expr2) = mkITE b expr1 expr2
 

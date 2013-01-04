@@ -42,91 +42,69 @@ type BitVec with
     static member (+)(BitVecExpr x, BitVecExpr y) = add x y
     static member (+)(BitVecExpr x, y) = add x (mkBitVec y x.SortSize)
     static member (+)(x, BitVecExpr y) = add (mkBitVec x y.SortSize) y
-    static member (+)(x, y) = add (mkBitVec x 32u) (mkBitVec y 32u)
     static member (-)(BitVecExpr x, BitVecExpr y) = subtract x y
     static member (-)(BitVecExpr x, y) = subtract x (mkBitVec y x.SortSize)
     static member (-)(x, BitVecExpr y) = subtract (mkBitVec x y.SortSize) y
-    static member (-)(x, y) = subtract (mkBitVec x 32u) (mkBitVec y 32u)
     static member (*)(BitVecExpr x, BitVecExpr y) = multiply x y
     static member (*)(BitVecExpr x, y) = multiply x (mkBitVec y x.SortSize)
     static member (*)(x, BitVecExpr y) = multiply (mkBitVec x y.SortSize) y
-    static member (*)(x, y) = multiply (mkBitVec x 32u) (mkBitVec y 32u) 
     static member (/)(BitVecExpr x, BitVecExpr y) = sdiv x y
     static member (/)(BitVecExpr x, y) = sdiv x (mkBitVec y x.SortSize)
     static member (/)(x, BitVecExpr y) = sdiv (mkBitVec x y.SortSize) y
-    static member (/)(x, y) = sdiv (mkBitVec x 32u) (mkBitVec y 32u)  
     static member (%)(BitVecExpr x, BitVecExpr y) = smod x y
     static member (%)(BitVecExpr x, y) = smod x (mkBitVec y x.SortSize)
     static member (%)(x, BitVecExpr y) = smod (mkBitVec x y.SortSize) y
-    static member (%)(x, y) = smod (mkBitVec x 32u) (mkBitVec y 32u)
     static member (<<<)(BitVecExpr x, BitVecExpr y) = shl x y
     static member (<<<)(BitVecExpr x, y) = shl x (mkBitVec y x.SortSize)
     static member (<<<)(x, BitVecExpr y) = shl (mkBitVec x y.SortSize) y
-    static member (<<<)(x, y) = shl (mkBitVec x 32u) (mkBitVec y 32u) 
     static member (>>>)(BitVecExpr x, BitVecExpr y) = ashr x y
     static member (>>>)(BitVecExpr x, y) = ashr x (mkBitVec y x.SortSize)
     static member (>>>)(x, BitVecExpr y) = ashr (mkBitVec x y.SortSize) y
-    static member (>>>)(x, y) = ashr (mkBitVec x 32u) (mkBitVec y 32u)  
     static member (&&&)(BitVecExpr x, BitVecExpr y) = bvand x y
     static member (&&&)(BitVecExpr x, y) = bvand x (mkBitVec y x.SortSize)
     static member (&&&)(x, BitVecExpr y) = bvand (mkBitVec x y.SortSize) y
-    static member (&&&)(x, y) = bvand (mkBitVec x 32u) (mkBitVec y 32u) 
     static member (|||)(BitVecExpr x, BitVecExpr y) = bvor x y
     static member (|||)(BitVecExpr x, y) = bvor x (mkBitVec y x.SortSize)
     static member (|||)(x, BitVecExpr y) = bvor (mkBitVec x y.SortSize) y
-    static member (|||)(x, y) = bvor (mkBitVec x 32u) (mkBitVec y 32u)
     static member (~~~)(BitVecExpr x) = bvnot x 
-    static member (~~~) x = bvnot (mkBitVec x 32u) 
     static member (>.)(BitVecExpr x, BitVecExpr y) = gt x y
     static member (>.)(BitVecExpr x, y) = gt x (mkBitVec y x.SortSize)
     static member (>.)(x, BitVecExpr y) = gt (mkBitVec x y.SortSize) y
-    static member (>.)(x, y) = gt (mkBitVec x 32u) (mkBitVec y 32u)  
     static member (=.)(BitVecExpr x, BitVecExpr y) = eq x y
     static member (=.)(BitVecExpr x, y) = eq x (mkBitVec y x.SortSize)
     static member (=.)(x, BitVecExpr y) = eq (mkBitVec x y.SortSize) y
-    static member (=.)(x, y) = eq (mkBitVec x 32u) (mkBitVec y 32u)  
     static member (>=.)(BitVecExpr x, BitVecExpr y) = ge x y
     static member (>=.)(BitVecExpr x, y) = ge x (mkBitVec y x.SortSize)
     static member (>=.)(x, BitVecExpr y) = ge (mkBitVec x y.SortSize) y
-    static member (>=.)(x, y) = ge (mkBitVec x 32u) (mkBitVec y 32u)  
     static member (<.)(BitVecExpr x, BitVecExpr y) = lt x y
     static member (<.)(BitVecExpr x, y) = lt x (mkBitVec y x.SortSize)
     static member (<.)(x, BitVecExpr y) = lt (mkBitVec x y.SortSize) y
-    static member (<.)(x, y) = lt (mkBitVec x 32u) (mkBitVec y 32u)  
     static member (<>.)(BitVecExpr x, BitVecExpr y) = ueq x y
     static member (<>.)(BitVecExpr x, y) = ueq x (mkBitVec y x.SortSize)
     static member (<>.)(x, BitVecExpr y) = ueq (mkBitVec x y.SortSize) y
-    static member (<>.)(x, y) = ueq (mkBitVec x 32u) (mkBitVec y 32u)  
     static member (<=.)(BitVecExpr x, BitVecExpr y) = le x y
     static member (<=.)(BitVecExpr x, y) = le x (mkBitVec y x.SortSize)
     static member (<=.)(x, BitVecExpr y) = le (mkBitVec x y.SortSize) y
-    static member (<=.)(x, y) = le (mkBitVec x 32u) (mkBitVec y 32u)
     static member Distinct xs = Array.map (fun (BitVecExpr expr) -> expr :> Expr) xs |> mkDistinct
     static member If(BoolExpr b, BitVecExpr expr1, BitVecExpr expr2) = mkITE b expr1 expr2
     static member (<~)(BitVecExpr x, BitVecExpr y) = ult x y
     static member (<~)(BitVecExpr x, y) = ult x (mkBitVec y x.SortSize)
     static member (<~)(x, BitVecExpr y) = ult (mkBitVec x y.SortSize) y
-    static member (<~)(x, y) = ult (mkBitVec x 32u) (mkBitVec y 32u)
     static member (<=~)(BitVecExpr x, BitVecExpr y) = ule x y
     static member (<=~)(BitVecExpr x, y) = ule x (mkBitVec y x.SortSize)
     static member (<=~)(x, BitVecExpr y) = ule (mkBitVec x y.SortSize) y
-    static member (<=~)(x, y) = ule (mkBitVec x 32u) (mkBitVec y 32u)
     static member (>~)(BitVecExpr x, BitVecExpr y) = ugt x y
     static member (>~)(BitVecExpr x, y) = ugt x (mkBitVec y x.SortSize)
     static member (>~)(x, BitVecExpr y) = ugt (mkBitVec x y.SortSize) y
-    static member (>~)(x, y) = ugt (mkBitVec x 32u) (mkBitVec y 32u)
     static member (>=~)(BitVecExpr x, BitVecExpr y) = uge x y
     static member (>=~)(BitVecExpr x, y) = uge x (mkBitVec y x.SortSize)
     static member (>=~)(x, BitVecExpr y) = uge (mkBitVec x y.SortSize) y
-    static member (>=~)(x, y) = uge (mkBitVec x 32u) (mkBitVec y 32u)
     static member (%~)(BitVecExpr x, BitVecExpr y) = umod x y
     static member (%~)(BitVecExpr x, y) = umod x (mkBitVec y x.SortSize)
     static member (%~)(x, BitVecExpr y) = umod (mkBitVec x y.SortSize) y
-    static member (%~)(x, y) = umod (mkBitVec x 32u) (mkBitVec y 32u)
     static member (>>>~)(BitVecExpr x, BitVecExpr y) = lshr x y
     static member (>>>~)(BitVecExpr x, y) = lshr x (mkBitVec y x.SortSize)
     static member (>>>~)(x, BitVecExpr y) = lshr (mkBitVec x y.SortSize) y
-    static member (>>>~)(x, y) = lshr (mkBitVec x 32u) (mkBitVec y 32u) 
 
 let BitVec(name: string, size: uint32) =
     let context = getContext()

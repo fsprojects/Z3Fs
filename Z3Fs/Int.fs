@@ -38,45 +38,35 @@ type Int with
     static member (+)(IntExpr x, IntExpr y) = add x y
     static member (+)(IntExpr x, y) = add x (mkInt y)
     static member (+)(x, IntExpr y) = add (mkInt x) y
-    static member (+)(x, y) = add (mkInt x) (mkInt y)
     static member (-)(IntExpr x, IntExpr y) = subtract x y
     static member (-)(IntExpr x, y) = subtract x (mkInt y)
     static member (-)(x, IntExpr y) = subtract (mkInt x) y
-    static member (-)(x, y) = subtract (mkInt x) (mkInt y)
     static member (*)(IntExpr x, IntExpr y) = multiply x y
     static member (*)(IntExpr x, y) = multiply x (mkInt y)
     static member (*)(x, IntExpr y) = multiply (mkInt x) y
-    static member (*)(x, y) = multiply (mkInt x) (mkInt y) 
     static member (/)(IntExpr x, IntExpr y) = divide x y
     static member (/)(IntExpr x, y) = divide x (mkInt y)
-    static member (/)(x, IntExpr y) = divide (mkInt x) y
-    static member (/)(x, y) = divide (mkInt x) (mkInt y)   
+    static member (/)(x, IntExpr y) = divide (mkInt x) y  
     static member Pow(IntExpr x, y) = exp x y // use this name instead of ( ** )
     static member Pow(x, y) = exp (mkInt x) y
     static member (>.)(IntExpr x, IntExpr y) = gt x y
     static member (>.)(IntExpr x, y) = gt x (mkInt y)
     static member (>.)(x, IntExpr y) = gt (mkInt x) y
-    static member (>.)(x, y) = gt (mkInt x) (mkInt y)  
     static member (=.)(IntExpr x, IntExpr y) = eq x y
     static member (=.)(IntExpr x, y) = eq x (mkInt y)
-    static member (=.)(x, IntExpr y) = eq (mkInt x) y
-    static member (=.)(x, y) = eq (mkInt x) (mkInt y)  
+    static member (=.)(x, IntExpr y) = eq (mkInt x) y 
     static member (>=.)(IntExpr x, IntExpr y) = ge x y
     static member (>=.)(IntExpr x, y) = ge x (mkInt y)
-    static member (>=.)(x, IntExpr y) = ge (mkInt x) y
-    static member (>=.)(x, y) = ge (mkInt x) (mkInt y)  
+    static member (>=.)(x, IntExpr y) = ge (mkInt x) y 
     static member (<.)(IntExpr x, IntExpr y) = lt x y
     static member (<.)(IntExpr x, y) = lt x (mkInt y)
     static member (<.)(x, IntExpr y) = lt (mkInt x) y
-    static member (<.)(x, y) = lt (mkInt x) (mkInt y)  
     static member (<>.)(IntExpr x, IntExpr y) = ueq x y
     static member (<>.)(IntExpr x, y) = ueq x (mkInt y)
-    static member (<>.)(x, IntExpr y) = ueq (mkInt x) y
-    static member (<>.)(x, y) = ueq (mkInt x) (mkInt y)  
+    static member (<>.)(x, IntExpr y) = ueq (mkInt x) y 
     static member (<=.)(IntExpr x, IntExpr y) = le x y
     static member (<=.)(IntExpr x, y) = le x (mkInt y)
     static member (<=.)(x, IntExpr y) = le (mkInt x) y
-    static member (<=.)(x, y) = le (mkInt x) (mkInt y)
     static member Distinct xs = Array.map (fun (IntExpr expr) -> expr :> Expr) xs |> mkDistinct
     static member If(BoolExpr b, IntExpr expr1, IntExpr expr2) = mkITE b expr1 expr2
 

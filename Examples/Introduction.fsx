@@ -11,8 +11,8 @@ open Real
 // Reference at http://rise4fun.com/Z3Py/tutorialcontent/guide#h20
 
 let introExample1() =
-    let x = Int "x"
-    let y = Int "y"
+    let x = Int("x")
+    let y = Int("y")
     Z3.Solve(x >. 2I, y <. 10I, x + 2I * y =. 7I)
 
 let introExample2() =
@@ -34,8 +34,8 @@ let introExample3() =
     printfn "op name: %O" n.FuncDecl.Name
 
 let introExample4() =
-    let x = Real "x"
-    let y = Real "y"
+    let x = Real("x")
+    let y = Real("y")
     Z3.Solve(x ** 2I + y ** 2I >. 3.0, x ** 3I + y <. 5.0)
 
 let introExample5() =
