@@ -1,4 +1,4 @@
-﻿#I "/Users/dungpa/Documents/workspace/Z3Fs/Z3Fs/bin/Debug"
+﻿#I "../Z3Fs/bin/Debug"
 #r "Microsoft.Z3.dll"
 #r "Z3Fs.dll"
 
