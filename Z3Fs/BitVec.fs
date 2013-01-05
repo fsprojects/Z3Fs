@@ -15,7 +15,7 @@ let BitVecExpr expr = BitVec(expr)
 let (|BitVecExpr|) (bv: BitVec) = bv.Expr :?> BitVecExpr
 
 [<AutoOpen>]
-module internal IntUtils =
+module internal BitVecUtils =
     let inline mkBitVec (v: int) (size: uint32) = getContext().MkBV(v, size)
     let inline add x y = getContext().MkBVAdd(x, y) |> BitVecExpr
     let inline subtract x y = getContext().MkBVSub(x, y) |> BitVecExpr
