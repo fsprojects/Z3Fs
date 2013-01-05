@@ -80,7 +80,3 @@ type Real with
 let Real(s: string) =
     let context = getContext()
     context.MkRealConst s |> RealExpr
-
-type Microsoft.Z3.FSharp.Bool.Z3 with
-    static member Simplify(RealExpr f, [<ParamArray>] options: (string * _) []) = 
-        simplify(f, options) :?> RealExpr |> RealExpr

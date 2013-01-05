@@ -11,8 +11,8 @@ open Real
 
 // Declare three Real variables
 let x = Real("x")
-let y =  Real("y")
-let z =  Real("z");;
+let y = Real("y")
+let z = Real("z");;
 
 // Solve linear problem
 Z3.Solve(x >=. 1.0,

@@ -81,7 +81,7 @@ type Overloads = Overloads with
 
 let inline (=>) k v = (Overloads $ v) k
 
-let internal simplify (f: Expr, options: (string * _) []) =
+let simplify (f: Expr) (options: (string * _) []) =
     let p = getContext().MkParams()
     for (k, v) in options do
         match v with
@@ -116,10 +116,10 @@ type Z3 =
         else printfn "No solution"
         result
 
-    static member Simplify(BoolExpr f, [<ParamArray>] options: (string * _) []) = 
-        simplify(f, options) :?> BoolExpr |> BoolExpr
+    static member inline Simplify(f: ^T when ^T :> Theory and ^T: (static member FromExpr : Expr -> ^T), 
+                                    [<ParamArray>] options: (string * _) []) = 
+        (^T : (static member FromExpr : Expr -> ^T) (simplify f.Expr options))
 
-    static member SetOption([<ParamArray>] options: (string * _) []) = 
-        setOption(options)
+    static member SetOption([<ParamArray>] options: (string * _) []) = setOption(options)
 
         

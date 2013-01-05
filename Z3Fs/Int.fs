@@ -80,7 +80,3 @@ type Int with
 let Int(s: string) = 
     let context = getContext()
     context.MkIntConst s |> IntExpr
-
-type Microsoft.Z3.FSharp.Bool.Z3 with
-    static member Simplify(IntExpr f, [<ParamArray>] options: (string * _) []) = 
-        simplify(f, options) :?> IntExpr |> IntExpr

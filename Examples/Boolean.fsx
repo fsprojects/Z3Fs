@@ -26,7 +26,7 @@ let booleanExample3() =
     let q = Bool("q")
     printfn "%O" <| And [|p; q; True|]
     printfn "%O" <| Z3.Simplify(And [|p; q; True|])
-    printfn "%O" <| Z3.Simplify(And[|p; False|])
+    printfn "%O" <| Z3.Simplify(And [|p; False|])
 
 let booleanExample4() =
     let p = Bool("p")
