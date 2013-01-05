@@ -10,6 +10,12 @@ let Solver() = getContext().MkSolver()
 
 let inline (++) xs ys = Array.append xs ys
 
+let BoolSort() = getContext().MkBoolSort()
+let IntSort() = getContext().MkIntSort()
+let RealSort() = getContext().MkRealSort()
+let BitVecSort(i) = getContext().MkBitVecSort(i)
+let ArraySort(domain, range) = getContext().MkArraySort(domain, range)
+
 [<AbstractClass>]
 type Theory() = 
     abstract member Expr: Expr
@@ -29,9 +35,10 @@ with override x.ToString() =
 
 /// Multiple indexers for evaluating formulas
 type Microsoft.Z3.Model with
-    member x.Item (index: Expr) = x.Eval(index, true)    
+    member x.Item (index: Expr) = x.Eval(index, true) 
     member x.Item (index: FuncDecl) = 
-        if index.Arity <> 0u then x.FuncInterp(index) |> Func
-        else x.ConstInterp(index) |> Const
+        if index.DomainSize = 0u && index.Arity = 0u && index.Range.IsExpr
+        then x.ConstInterp(index) |> Const
+        else x.FuncInterp(index) |> Func
     member x.Evaluate(v: Theory, ?completion) =
             x.Evaluate(v.Expr, defaultArg completion false)
