@@ -32,7 +32,17 @@ let functionExample2() =
     printfn "f(f(x)) = %O" <| m.Evaluate(f(f(x)))
     printfn "f(x)    = %O" <| m.Evaluate(f(x))
 
+let functionExample3() =
+    let x = Int("x")
+    let y = Int("y")
+    let c = IntVal(10I)
+
+    let f (a: Int) = Z3.CreateFunction<Int>("f", IntSort(), a)
+    
+    Z3.Solve(x >. 20I, y >. x, f(c) =. 1I)
+
 #time "on";;
 
 let res01 = functionExample1();;
 let res02 = functionExample2();;
+let res03 = functionExample3();;
