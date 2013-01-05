@@ -71,6 +71,7 @@
     <Compile Include="Real.fs" />
     <Compile Include="BitVec.fs" />
     <Compile Include="Function.fs" />
+    <Compile Include="Array.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
   </ItemGroup>
