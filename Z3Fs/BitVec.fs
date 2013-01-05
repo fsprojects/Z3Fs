@@ -10,7 +10,6 @@ type BitVec(expr: BitVecExpr) =
     override x.Expr = expr :> Expr
     override x.ToString() = sprintf "%O" expr
     static member FromExpr (e: Expr) = BitVec(e :?> BitVecExpr)
-    static member Sort = getContext().MkBitVecSort(32u) :> Sort
 
 let BitVecExpr expr = BitVec(expr)
 let (|BitVecExpr|) (bv: BitVec) = bv.Expr :?> BitVecExpr

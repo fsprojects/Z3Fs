@@ -14,7 +14,7 @@ let functionExample1() =
     let x = Int("x")
     let y = Int("y")
 
-    let f (a: Int) = Z3.CreateFunction<Int>("f", a)
+    let f (a: Int) = Z3.CreateFunction<Int>("f", IntSort(), a)
     
     Z3.Solve(f(f(x)) =. x, f(x) =. y, x <>. y)
 
@@ -22,7 +22,7 @@ let functionExample2() =
     let x = Int("x")
     let y = Int("y")
     
-    let f (x: Int) = Z3.CreateFunction<Int>("f", x)
+    let f (x: Int) = Z3.CreateFunction<Int>("f", IntSort(), x)
     
     let s = Solver()
     s.Add(f(f(x)) =. x, f(x) =. y, x <>. y)

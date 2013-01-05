@@ -10,7 +10,6 @@ type Real(expr: RealExpr) =
     override x.Expr = expr :> Expr
     override x.ToString() = sprintf "%O" expr
     static member FromExpr (e: Expr) = Real(e :?> RealExpr)
-    static member Sort = getContext().MkRealSort() :> Sort
 
 let RealExpr expr = Real(expr)
 let (|RealExpr|) (r: Real) = r.Expr :?> RealExpr
@@ -77,3 +76,7 @@ type Real with
 let Real(s: string) =
     let context = getContext()
     context.MkRealConst s |> RealExpr
+
+let RealVal(f: float) = 
+    let context = getContext()
+    context.MkReal(f.ToString()) :> RealExpr |> RealExpr

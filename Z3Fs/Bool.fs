@@ -11,7 +11,6 @@ type Bool(e: BoolExpr) =
     override x.Expr = e :> Expr
     override x.ToString() = sprintf "%O" e
     static member FromExpr (e: Expr) = Bool(e :?> BoolExpr)
-    static member Sort = getContext().MkBoolSort() :> Sort
 
 let BoolExpr expr = Bool(expr)
 let (|BoolExpr|) (b: Bool) = b.Expr :?> BoolExpr

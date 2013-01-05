@@ -12,7 +12,6 @@ type Int(expr: IntExpr) =
     override x.Expr = expr :> Expr
     override x.ToString() = sprintf "%O" expr
     static member FromExpr (e: Expr) = Int(e :?> IntExpr)
-    static member Sort = getContext().MkIntSort() :> Sort
 
 let IntExpr expr = Int(expr)
 let (|IntExpr|) (i: Int) = i.Expr :?> IntExpr
@@ -79,3 +78,9 @@ type Int with
 let Int(s: string) = 
     let context = getContext()
     context.MkIntConst s |> IntExpr
+
+let IntVal(i: bigint) = 
+    let context = getContext()
+    context.MkInt(i.ToString()) :> IntExpr |> IntExpr
+
+
