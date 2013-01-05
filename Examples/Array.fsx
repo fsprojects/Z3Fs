@@ -15,6 +15,13 @@ let arrayExample1() =
     let a = Array<Int, Int>("a", IntSort(), IntSort())
     Z3.Solve(And [|for (i, v) in vals -> Select a i =. v|])
 
+let arrayExample2() =
+    let x = Int("x")
+    let y = Int("y")
+    let a = Array<Int, Int>("a", IntSort(), IntSort())
+    Z3.Solve(Select a x =. x, Store a x y =. a, x <>. y)
+
 #time "on";;
 
 let res01 = arrayExample1();;
+let res02 = arrayExample2();;

@@ -10,6 +10,10 @@ type Array<'I, 'O>(expr: ArrayExpr) =
     override x.Expr = expr :> Expr
     override x.ToString() = sprintf "%O" expr
     static member FromExpr (e: Expr) = Array<_, _>(e :?> ArrayExpr)
+    static member (=.)(a1: Array<'I, 'O>, a2: Array<'I, 'O>) = 
+        getContext().MkEq(a1.Expr, a2.Expr) |> BoolExpr
+    static member (<>.)(a1: Array<'I, 'O>, a2: Array<'I, 'O>) = 
+        getContext().MkDistinct(a1.Expr, a2.Expr) |> BoolExpr
 
 let ArrayExpr<'I, 'O> expr = Array<'I, 'O>(expr)
 let (|ArrayExpr|) (a: Array<_, _>) = a.Expr :?> ArrayExpr
