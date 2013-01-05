@@ -10,4 +10,5 @@ type Microsoft.Z3.FSharp.Bool.Z3 with
                             (name: string, range: Sort, [<ParamArray>] args: Theory []) =
         let exprs = args |> Array.map (fun arg -> arg.Expr)
         let sorts = exprs |> Array.map (fun expr -> expr.Sort)
-        (^T : (static member FromExpr : Expr -> ^T) (getContext().MkFuncDecl(name, sorts, range).Apply(exprs)))
+        let expr = getContext().MkFuncDecl(name, sorts, range).Apply(exprs)
+        (^T : (static member FromExpr : Expr -> ^T) (expr))

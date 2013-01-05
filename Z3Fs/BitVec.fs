@@ -117,4 +117,3 @@ let BitVec(name: string, size: uint32) =
 
 let BitVecVal(v: int, size: uint32) =
     mkBitVec v size :> BitVecExpr |> BitVecExpr
-

@@ -121,5 +121,3 @@ type Z3 =
         (^T : (static member FromExpr : Expr -> ^T) (simplify f.Expr options))
 
     static member SetOption([<ParamArray>] options: (string * _) []) = setOption(options)
-
-        

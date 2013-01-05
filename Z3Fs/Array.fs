@@ -27,4 +27,3 @@ let inline Select<'I, ^O  when 'I :> Theory and ^O: (static member FromExpr : Ex
 let inline Store<'I, 'O  when 'I :> Theory and 'O :> Theory> 
         (a: Array<'I, 'O>) (i: 'I) (x: 'O) =
     getContext().MkStore(a.Expr :?> ArrayExpr, i.Expr, x.Expr) |> ArrayExpr<'I, 'O>
-    

@@ -37,8 +37,8 @@ with override x.ToString() =
 type Microsoft.Z3.Model with
     member x.Item (index: Expr) = x.Eval(index, true) 
     member x.Item (index: FuncDecl) = 
-        if index.DomainSize = 0u && index.Arity = 0u && index.Range.IsExpr
+        if index.DomainSize = 0u && index.Range.SortKind <> Z3_sort_kind.Z3_ARRAY_SORT // Taking care of array declaration
         then x.ConstInterp(index) |> Const
         else x.FuncInterp(index) |> Func
-    member x.Evaluate(v: Theory, ?completion) =
-            x.Evaluate(v.Expr, defaultArg completion false)
+    member x.Evaluate(v: Theory, ?modelCompletion) =
+            x.Evaluate(v.Expr, defaultArg modelCompletion false)
