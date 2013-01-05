@@ -2,10 +2,9 @@
 #r "Microsoft.Z3"
 #r "Z3Fs"
 
-open Microsoft.Z3.FSharp
-open Common
-open Bool
-open Real
+open Microsoft.Z3.FSharp.Common
+open Microsoft.Z3.FSharp.Bool
+open Microsoft.Z3.FSharp.Real
 
 // Reference from http://rise4fun.com/Z3Py/simple
 

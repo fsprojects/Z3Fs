@@ -2,10 +2,10 @@
 #r "Microsoft.Z3"
 #r "Z3Fs"
 
-open Microsoft.Z3.FSharp
-open Common
-open Bool
-open BitVec
+open Microsoft.Z3.FSharp.Common
+open Microsoft.Z3.FSharp.Bool
+open Microsoft.Z3.FSharp.Int
+open Microsoft.Z3.FSharp.BitVec
 
 // Reference from http://rise4fun.com/Z3Py/tutorialcontent/guide#h24
 
