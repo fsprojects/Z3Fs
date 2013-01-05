@@ -54,7 +54,6 @@ type Int with
     static member (/)(IntExpr x, y) = divide x (mkInt y)
     static member (/)(x, IntExpr y) = divide (mkInt x) y  
     static member Pow(IntExpr x, y) = exp x y // use this name instead of ( ** )
-    static member Pow(x, y) = exp (mkInt x) y
     static member (>.)(IntExpr x, IntExpr y) = gt x y
     static member (>.)(IntExpr x, y) = gt x (mkInt y)
     static member (>.)(x, IntExpr y) = gt (mkInt x) y

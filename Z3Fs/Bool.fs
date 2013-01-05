@@ -66,6 +66,7 @@ let Not (arg: Bool) = !. arg
 
 let inline Distinct (xs: ^T []) = 
     (^T : (static member Distinct : ^T [] -> Bool) (xs)) 
+
 let inline If (b: Bool, expr1: ^T, expr2: ^T) = 
     (^T : (static member If : Bool * ^T * ^T -> Bool) (b, expr1, expr2))
 
@@ -76,8 +77,8 @@ type Val =
 
 type Overloads = Overloads with
     static member ($)(Overloads, b) = fun (s: string) -> s, Bool b
-    static member ($)(Overloads, i: uint32) = fun (s: string) -> s, UInt i
-    static member ($)(Overloads, f: float) = fun (s: string) -> s, Double f
+    static member ($)(Overloads, i) = fun (s: string) -> s, UInt i
+    static member ($)(Overloads, f) = fun (s: string) -> s, Double f
 
 let inline (=>) k v = (Overloads $ v) k
 

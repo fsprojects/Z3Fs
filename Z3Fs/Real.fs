@@ -52,7 +52,6 @@ type Real with
     static member (/)(RealExpr x, y) = divide x (mkReal y)
     static member (/)(x, RealExpr y) = divide (mkReal x) y
     static member Pow(RealExpr x, y) = exp x y
-    static member Pow(x, y) = exp (mkReal x) y
     static member (>.)(RealExpr x, RealExpr y) = gt x y
     static member (>.)(RealExpr x, y) = gt x (mkReal y)
     static member (>.)(x, RealExpr y) = gt (mkReal x) y 
@@ -65,11 +64,9 @@ type Real with
     static member (<.)(RealExpr x, RealExpr y) = lt x y
     static member (<.)(RealExpr x, y) = lt x (mkReal y)
     static member (<.)(x, RealExpr y) = lt (mkReal x) y
-    static member (<.)(x, y) = lt (mkReal x) (mkReal y)  
     static member (<>.)(RealExpr x, RealExpr y) = ueq x y
     static member (<>.)(RealExpr x, y) = ueq x (mkReal y)
     static member (<>.)(x, RealExpr y) = ueq (mkReal x) y
-    static member (<>.)(x, y) = ueq (mkReal x) (mkReal y)  
     static member (<=.)(RealExpr x, RealExpr y) = le x y
     static member (<=.)(RealExpr x, y) = le x (mkReal y)
     static member (<=.)(x, RealExpr y) = le (mkReal x) y
