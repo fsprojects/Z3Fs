@@ -11,6 +11,9 @@ Hopefully, `Z3Fs` could give a look of a small EDSL for SMT solving in F#.
 
 ---
 ### Setup / Installation ###
+There are two solutions for Visual Studio 2012 and MonoDevelop 3.0 respectively.
+The project currently uses Z3 4.0 64-bit along with F# 3.0. 
+Although there are newer versions of Z3, we stick with Z3 4.0 to remedy the problem of setting MonoDevelop project.
 
 ---
 ### Implementation notes ###
@@ -19,7 +22,7 @@ Hopefully, `Z3Fs` could give a look of a small EDSL for SMT solving in F#.
 ### TODO ###
 
 - Check correctness of examples carefully.
-- Examine difficult modules including uninterpreted functions and bit-vectors.
+- Implement other theories: Arrays, Datatypes and Quantifiers.
 - Rearrange modules; many functions are in wrong places.
 - Rewrite ToString() for pretty-printing.
 - Standardize the use of %A and %O.
