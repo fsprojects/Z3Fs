@@ -7,9 +7,15 @@ open Microsoft.Z3
 open Microsoft.Z3.FSharp.Common
 open Microsoft.Z3.FSharp.Bool
 
-type Int = IntExpr of IntExpr
-with member x.Expr = match x with IntExpr expr -> expr
-     override x.ToString() = match x with IntExpr expr -> sprintf "%O" expr
+type Int(expr: IntExpr) = 
+    inherit Theory()
+    override x.Expr = expr :> Expr
+    override x.ToString() = sprintf "%O" expr
+    static member FromExpr (e: Expr) = Int(e :?> IntExpr)
+    static member Sort = getContext().MkIntSort() :> Sort
+
+let IntExpr expr = Int(expr)
+let (|IntExpr|) (i: Int) = i.Expr :?> IntExpr
 
 [<AutoOpen>]
 module internal IntUtils =

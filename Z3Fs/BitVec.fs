@@ -5,9 +5,15 @@ open Microsoft.Z3
 open Microsoft.Z3.FSharp.Common
 open Microsoft.Z3.FSharp.Bool
 
-type BitVec = BitVecExpr of BitVecExpr
-with member x.Expr = match x with BitVecExpr expr -> expr
-     override x.ToString() = match x with BitVecExpr expr -> sprintf "%O" expr
+type BitVec(expr: BitVecExpr) = 
+    inherit Theory()
+    override x.Expr = expr :> Expr
+    override x.ToString() = sprintf "%O" expr
+    static member FromExpr (e: Expr) = BitVec(e :?> BitVecExpr)
+    static member Sort = getContext().MkBitVecSort(32u) :> Sort
+
+let BitVecExpr expr = BitVec(expr)
+let (|BitVecExpr|) (bv: BitVec) = bv.Expr :?> BitVecExpr
 
 [<AutoOpen>]
 module internal IntUtils =

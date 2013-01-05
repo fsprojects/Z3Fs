@@ -5,9 +5,15 @@ open Microsoft.Z3
 open Microsoft.Z3.FSharp.Common
 open Microsoft.Z3.FSharp.Bool
 
-type Real = RealExpr of RealExpr
-with member x.Expr = match x with RealExpr expr -> expr
-     override x.ToString() = match x with RealExpr expr -> sprintf "%O" expr
+type Real(expr: RealExpr) = 
+    inherit Theory()
+    override x.Expr = expr :> Expr
+    override x.ToString() = sprintf "%O" expr
+    static member FromExpr (e: Expr) = Real(e :?> RealExpr)
+    static member Sort = getContext().MkRealSort() :> Sort
+
+let RealExpr expr = Real(expr)
+let (|RealExpr|) (r: Real) = r.Expr :?> RealExpr
 
 [<AutoOpen>]
 module internal RealUtils =

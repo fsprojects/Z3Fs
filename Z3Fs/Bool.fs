@@ -6,9 +6,15 @@ open System.Numerics
 open Microsoft.Z3
 open Microsoft.Z3.FSharp.Common
 
-type Bool = BoolExpr of BoolExpr
-with member x.Expr = match x with BoolExpr expr -> expr
-     override x.ToString() = match x with BoolExpr expr -> sprintf "%O" expr
+type Bool(e: BoolExpr) = 
+    inherit Theory()
+    override x.Expr = e :> Expr
+    override x.ToString() = sprintf "%O" e
+    static member FromExpr (e: Expr) = Bool(e :?> BoolExpr)
+    static member Sort = getContext().MkBoolSort() :> Sort
+
+let BoolExpr expr = Bool(expr)
+let (|BoolExpr|) (b: Bool) = b.Expr :?> BoolExpr
 
 type Microsoft.Z3.Solver with
     member x.Add([<ParamArray>] xs: _ []) =
