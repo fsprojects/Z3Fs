@@ -16,7 +16,14 @@ The project currently uses Z3 4.0 64-bit along with F# 3.0.
 Although there are newer versions of Z3, we stick with Z3 4.0 to remedy the problem of setting MonoDevelop project.
 
 ---
-### Implementation notes ###
+### Current limitations ###
+
+- Poor support for uninterpreted functions. 
+You need explicit type annotations and there is no way to detect inconsistencies between arguments in a type-safe way.
+- Limited support for array theory. It suffers from the same symptoms as uninterpreted functions.
+- Bad coding habits. The code base currently uses too many type constraints.
+- Support for quantifiers would be hard. Maybe it isn't the correct way to go forward.
+- The syntax isn't very concise. It might be better to lean towards declarative style.
 
 ---
 ### TODO ###
