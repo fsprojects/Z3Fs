@@ -19,9 +19,8 @@ let rows = [| for i in 0..7 -> And [|1I <=. queens.[i]; queens.[i] <=. 8I|] |]
 let cols = [| Distinct(queens) |]
 
 // Diagonal constraint
-let diags = [| for i in 0..7 do
-                 for j in 0..i do
-                    if i <> j then 
+let diags = [| for i in 1..7 do
+                 for j in 0..i-1 do 
                        yield And [| queens.[i] - queens.[j] <>. bigint (i - j);
                                     queens.[i] - queens.[j] <>. bigint (j - i) |] |];;
 
