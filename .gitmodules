@@ -1,0 +1,3 @@
+[submodule "vendor/Z3"]
+	path = vendor/Z3
+	url = https://github.com/Z3Prover/z3.git
