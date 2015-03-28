@@ -5,7 +5,7 @@ A simple DSL to solve SMT problems using Z3 API in F#
 
 ---
 ### Purpose
-[Z3](http://z3.codeplex.com/) is a high-performance theorem prover being developed at Microsoft Research. 
+[Z3](https://github.com/Z3Prover/z3) is a high-performance theorem prover being developed at Microsoft Research. 
 Z3 has [an official .NET API written in C#](http://z3.codeplex.com/SourceControl/changeset/view/89c1785b7322#src/api/dotnet/Context.cs), but it is too verbose and not F#-friendly. 
 This project aims at providing a simple API to 
  - Do constraint solving
@@ -65,3 +65,8 @@ You need explicit type annotations and there is no way to detect inconsistencies
 - Rearrange modules; many functions are in wrong places.
 - Rewrite ToString() for pretty-printing.
 - Standardize the use of %A and %O.
+
+---
+### License
+
+[The MIT license](LICENSE.txt)
