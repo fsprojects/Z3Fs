@@ -84,6 +84,7 @@
   <Target Name="AfterBuild">
     <Copy SourceFiles="$(ProjectDir)..\..\vendor\Z3\build\z3.dll" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
     <Copy SourceFiles="$(ProjectDir)..\..\vendor\Z3\build\libz3.dylib" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
+    <Copy SourceFiles="$(ProjectDir)..\..\vendor\Z3\build\libz3.so" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
   </Target>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v3.0' Or $(TargetFrameworkVersion) == 'v3.5')">
