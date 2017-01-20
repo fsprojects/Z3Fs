@@ -94,5 +94,5 @@ module Solver =
   let check (solver : Solver) =
     solver.Check () |> wrap_status solver
 
-  let check_assumptions (solver : Solver) (assumptions : _ list) =
+  let checkAssumptions (solver : Solver) (assumptions : _ list) =
     solver.Check(Array.ofList assumptions) |> wrap_status solver
