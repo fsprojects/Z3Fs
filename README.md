@@ -48,7 +48,7 @@ Z3.Solve(dog >=. 1I,   // at least one dog
          1500I * dog + 100I * cat + 25I * mouse =. 10000I)
 ```
 
-Take a look at [Examples](Examples) for an extensive set of examples.
+Take a look at [Examples](src/Examples) for an extensive set of examples.
 
 ### Setup / Installation
 
